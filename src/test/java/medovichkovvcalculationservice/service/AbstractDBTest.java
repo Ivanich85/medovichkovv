@@ -1,10 +1,10 @@
 package medovichkovvcalculationservice.service;
 
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author ivand on 22.07.2020
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = {"classpath:spring/test-config.xml"})
 @Sql(scripts = {"classpath:database/create_tables.sql", "classpath:database/populate"}, config = @SqlConfig(encoding = "UTF-8"))
 public abstract class AbstractDBTest {

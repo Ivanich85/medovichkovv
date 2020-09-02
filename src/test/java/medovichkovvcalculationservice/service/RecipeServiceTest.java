@@ -2,7 +2,7 @@ package medovichkovvcalculationservice.service;
 
 import medovichkovvcalculationservice.entities.Recipe;
 import medovichkovvcalculationservice.enums.PrivacyType;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;

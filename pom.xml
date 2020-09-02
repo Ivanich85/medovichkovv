@@ -37,7 +37,7 @@
         <lombok.version>1.18.10</lombok.version>
 
         <!-- Test -->
-        <junit.version>4.12</junit.version>
+        <junit.version>5.2.0</junit.version>
         <assertj.version>3.13.2</assertj.version>
 
     </properties>
@@ -130,10 +130,10 @@
             <version>${spring-data-jpa.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
