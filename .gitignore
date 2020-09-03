@@ -3,4 +3,5 @@
 .iml
 target
 build
+.gradle
 /medovichkovv-calculation-service.iml
