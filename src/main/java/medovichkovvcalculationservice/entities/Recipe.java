@@ -5,6 +5,7 @@ import medovichkovvcalculationservice.enums.PrivacyType;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Objects;
@@ -38,6 +39,9 @@ public class Recipe implements Serializable {
 
     @Column(name = "NAME", nullable = false)
     private String name;
+
+    @Column(name = "SQUARE", nullable = false)
+    private BigDecimal square;
 
     @Column(name = "CREATION_DATE", nullable = false)
     private LocalDateTime creationDate;

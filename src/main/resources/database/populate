@@ -3,14 +3,13 @@ delete from mc_ingredient where 1 = 1;
 delete from mc_component where 1 = 1;
 
 insert into mc_recipe
-(id, user_id, name, creation_date, favorite)
+(id, user_id, name, square, creation_date, favorite)
 values
-(100, 1, 'Медовик', current_timestamp, true);
+(100, 1, 'Медовик', 254.30, current_timestamp, true);
 
 insert into mc_component
 (id, recipe_id, name, quantity, type)
 values
--- Ванин простой рецепт
 (1000, 100, 'Коржи', 12, 'CAKE'),
 (1001, 100, 'Крем сметанный', 1, 'CREAM'),
 (1002, 100, 'Крем заварной', 1, 'CUSTARD'),
