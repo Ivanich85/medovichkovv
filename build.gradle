@@ -11,39 +11,28 @@ jar {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.10'
 
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
-    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+    // Libraries
+    compile "org.apache.commons:commons-lang3:3.10"
+    compile "org.apache.commons:commons-collections4:4.4"
+    compile "org.projectlombok:lombok:1.18.10"
+    annotationProcessor "org.projectlombok:lombok:1.18.10"
 
-    // https://mvnrepository.com/artifact/postgresql/postgresql
-    compile group: 'postgresql', name: 'postgresql', version: '8.4-702.jdbc4'
+    // Database
+    compile "postgresql:postgresql:8.4-702.jdbc4"
+    compile "org.hibernate:hibernate-core:5.4.7.Final"
 
-    // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.7.Final'
+    // Bean validation
+    compile "javax.validation:validation-api:2.0.1.Final"
 
-    // https://mvnrepository.com/artifact/javax.validation/validation-api
-    compile group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    // Spring
+    compile "org.springframework:spring-core:5.2.2.RELEASE"
+    compile "org.springframework.data:spring-data-jpa:2.2.6.RELEASE"
 
-    // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
-    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
-
-    // https://mvnrepository.com/artifact/org.springframework/spring-core
-    compile group: 'org.springframework', name: 'spring-core', version: '5.2.2.RELEASE'
-
-    // https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa
-    compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.2.6.RELEASE'
-
-    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.2'
-
-    // https://mvnrepository.com/artifact/org.springframework/spring-test
-    testCompile group: 'org.springframework', name: 'spring-test', version: '5.2.2.RELEASE'
-
-    // https://mvnrepository.com/artifact/org.assertj/assertj-core
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.16.1'
+    // Tests
+    testCompile "org.junit.jupiter:junit-jupiter-engine:5.6.2"
+    testCompile "org.springframework:spring-test:5.2.2.RELEASE"
+    testCompile "org.assertj:assertj-core:3.16.1"
 }
 
 compileJava {
