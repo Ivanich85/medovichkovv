@@ -4,7 +4,7 @@ import medovichkovvcalculationservice.entities.Recipe;
 
 import java.util.List;
 
-public interface RecipeService {
+public interface RecipeService extends CrudService<Recipe, Long> {
 
     Recipe getByIdAndUser(Long recipeId, Long userId);
 
@@ -13,8 +13,6 @@ public interface RecipeService {
     List<Recipe> getAllForCurrentUser(Long userId);
 
     List<Recipe> getAll();
-
-    Recipe save(Recipe recipe);
 
     boolean delete(Long recipeId, Long userId);
 

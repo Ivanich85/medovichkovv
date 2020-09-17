@@ -4,14 +4,9 @@ import medovichkovvcalculationservice.entities.Ingredient;
 
 import java.util.List;
 
-public interface IngredientService {
-    Ingredient getById(Long ingredientId);
+public interface IngredientService extends CrudService<Ingredient, Long> {
 
     List<Ingredient> getByComponentId(Long componentId);
-
-    Ingredient save(Ingredient ingredient);
-
-    boolean delete(Long ingredientId);
 
     boolean deleteAllForComponent(Long componentId);
 
