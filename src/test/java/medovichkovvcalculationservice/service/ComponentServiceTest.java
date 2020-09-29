@@ -1,6 +1,6 @@
 package medovichkovvcalculationservice.service;
 
-import medovichkovvcalculationservice.entities.Component;
+import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.enums.ComponentType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,9 @@ public class ComponentServiceTest extends AbstractDBTest {
 
     @Test
     public void getById() {
-        Component expectedComponent = new Component(componentId, null, "Коржи", ComponentType.CAKE, 12, null);
-        Component actual = componentService.getById(componentId);
+        var expectedComponent =
+                new Component(componentId, null, "Коржи", ComponentType.CAKE, 12, null);
+        var actual = componentService.getById(componentId);
         assertThat(actual)
                 .isEqualToIgnoringGivenFields(expectedComponent, "recipe", "ingredients");
     }
@@ -46,8 +47,9 @@ public class ComponentServiceTest extends AbstractDBTest {
     public void updateExist() {
         String newName = "Квадратный корж";
         Integer quantity = 5;
-        Component expectedComponent = new Component(componentId, recipeService.getByIdAndUser(recipeId, userId), newName, ComponentType.CAKE, quantity, null);
-        Component actualComponent = componentService.getById(componentId);
+        var expectedComponent =
+                new Component(componentId, recipeService.getByIdAndUser(recipeId, userId), newName, ComponentType.CAKE, quantity, null);
+        var actualComponent = componentService.getById(componentId);
         actualComponent.setName(newName);
         actualComponent.setQuantity(quantity);
         assertThat(componentService.save(actualComponent)).

@@ -1,6 +1,6 @@
 package medovichkovvcalculationservice;
 
-import medovichkovvcalculationservice.entities.Recipe;
+import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.repository.RecipeRepository;
 import medovichkovvcalculationservice.service.RecipeServiceImpl;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

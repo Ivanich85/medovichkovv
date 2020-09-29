@@ -1,4 +1,4 @@
-package medovichkovvcalculationservice.entities;
+package medovichkovvcalculationservice.entity;
 
 /**
  * @author ivand on 12.07.2020
@@ -37,7 +37,7 @@ public class Ingredient implements Serializable {
     private String name;
 
     @Column(name = "QUANTITY", nullable = false)
-    private Double weight;
+    private BigDecimal weight;
 
     @Column(name = "QUANTITY_TYPE", nullable = false)
     @Enumerated(value = EnumType.STRING)

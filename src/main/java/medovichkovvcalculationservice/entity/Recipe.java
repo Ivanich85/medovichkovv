@@ -1,13 +1,16 @@
-package medovichkovvcalculationservice.entities;
+package medovichkovvcalculationservice.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import medovichkovvcalculationservice.enums.PrivacyType;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -35,7 +38,7 @@ public class Recipe implements Serializable {
     private Long userId;
 
     @OneToMany(mappedBy = "recipe")
-    private Collection<Component> components;
+    private List<Component> components;
 
     @Column(name = "NAME", nullable = false)
     private String name;
@@ -60,13 +63,12 @@ public class Recipe implements Serializable {
         Recipe recipe = (Recipe) o;
         return isFavorite == recipe.isFavorite &&
                 userId.equals(recipe.userId) &&
-                Objects.equals(components, recipe.components) &&
                 name.equals(recipe.name) &&
                 privacyType == recipe.privacyType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, components, name, isFavorite, privacyType);
+        return Objects.hash(userId, name, isFavorite, privacyType);
     }
 }

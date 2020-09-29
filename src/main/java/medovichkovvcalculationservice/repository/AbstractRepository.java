@@ -1,6 +1,5 @@
 package medovichkovvcalculationservice.repository;
 
-import medovichkovvcalculationservice.entities.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

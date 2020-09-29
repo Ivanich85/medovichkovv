@@ -1,6 +1,6 @@
 package medovichkovvcalculationservice.repository;
 
-import medovichkovvcalculationservice.entities.Recipe;
+import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.enums.PrivacyType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

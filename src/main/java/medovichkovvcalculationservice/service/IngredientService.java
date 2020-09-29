@@ -1,6 +1,6 @@
 package medovichkovvcalculationservice.service;
 
-import medovichkovvcalculationservice.entities.Ingredient;
+import medovichkovvcalculationservice.entity.Ingredient;
 
 import java.util.List;
 

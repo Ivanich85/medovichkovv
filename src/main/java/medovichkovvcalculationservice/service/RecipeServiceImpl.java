@@ -1,10 +1,9 @@
 package medovichkovvcalculationservice.service;
 
-import medovichkovvcalculationservice.entities.Recipe;
+import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.repository.ComponentRepository;
 import medovichkovvcalculationservice.repository.IngredientRepository;
 import medovichkovvcalculationservice.repository.RecipeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,6 @@ public class RecipeServiceImpl implements RecipeService {
     private final ComponentRepository componentRepository;
     private final IngredientRepository ingredientRepository;
 
-    @Autowired
     public RecipeServiceImpl(RecipeRepository recipeRepository,
                              ComponentRepository componentRepository,
                              IngredientRepository ingredientRepository) {

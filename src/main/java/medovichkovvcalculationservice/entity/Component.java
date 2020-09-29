@@ -1,11 +1,14 @@
-package medovichkovvcalculationservice.entities;
+package medovichkovvcalculationservice.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import medovichkovvcalculationservice.enums.ComponentType;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -40,7 +43,7 @@ public class Component implements Serializable {
     private Integer quantity;
 
     @OneToMany(mappedBy = "component", fetch = FetchType.EAGER)
-    private Collection<Ingredient> ingredients;
+    private List<Ingredient> ingredients;
 
     @Override
     public boolean equals(Object o) {
@@ -50,12 +53,11 @@ public class Component implements Serializable {
         return recipe.equals(component.recipe) &&
                 name.equals(component.name) &&
                 type == component.type &&
-                quantity.equals(component.quantity) &&
-                Objects.equals(ingredients, component.ingredients);
+                quantity.equals(component.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(recipe, name, type, quantity, ingredients);
+        return Objects.hash(recipe, name, type, quantity);
     }
 }

@@ -9,7 +9,7 @@
     <!-- Bean lookup -->
     <context:component-scan base-package="medovichkovvcalculationservice.repository"/>
     <context:component-scan base-package="medovichkovvcalculationservice.service"/>
-    <context:component-scan base-package="medovichkovvcalculationservice.entities"/>
+    <context:component-scan base-package="medovichkovvcalculationservice.entity"/>
 
 
     <!-- Database properties -->
@@ -25,7 +25,7 @@
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="medovichkovvcalculationservice.entities"/>
+        <property name="packagesToScan" value="medovichkovvcalculationservice.entity"/>
 
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">

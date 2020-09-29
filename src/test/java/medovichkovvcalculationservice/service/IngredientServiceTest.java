@@ -1,6 +1,6 @@
 package medovichkovvcalculationservice.service;
 
-import medovichkovvcalculationservice.entities.Ingredient;
+import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.enums.IngredientQtyType;
 import medovichkovvcalculationservice.repository.IngredientRepository;
 import org.junit.jupiter.api.Test;
@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static medovichkovvcalculationservice.service.TestUtils.prepareBigDecimal;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class IngredientServiceTest extends AbstractDBTest {
@@ -20,13 +21,11 @@ public class IngredientServiceTest extends AbstractDBTest {
     @Autowired
     private ComponentService componentService;
 
-    @Autowired
-    private IngredientRepository  ingredientRepository;
-
     @Test
     public void getById() {
-        Ingredient expected = new Ingredient(ingredientId, null, "Яйца", 10.0, IngredientQtyType.PIECE, BigDecimal.valueOf(75).setScale(2));
-        Ingredient actual = ingredientService.getById(ingredientId);
+        var expected =
+                new Ingredient(ingredientId, null, "Яйца", prepareBigDecimal(10.0), IngredientQtyType.PIECE, prepareBigDecimal(75.0));
+        var actual = ingredientService.getById(ingredientId);
         assertThat(actual).isEqualToIgnoringGivenFields(expected, "component");
     }
 
@@ -39,8 +38,9 @@ public class IngredientServiceTest extends AbstractDBTest {
 
     @Test
     public void saveNew() {
-        Ingredient expected = ingredientService.save(new Ingredient(ingredientId, componentService.getById(componentId), "Яйца", 10.0, IngredientQtyType.PIECE, BigDecimal.valueOf(75).setScale(2)));
-        Ingredient actual = ingredientService.getById(expected.getId());
+        var expected =
+                ingredientService.save(new Ingredient(ingredientId, componentService.getById(componentId), "Яйца", prepareBigDecimal(10.0), IngredientQtyType.PIECE, prepareBigDecimal(75.0)));
+        var actual = ingredientService.getById(expected.getId());
         assertThat(actual).
                 isEqualToIgnoringGivenFields(expected, "component");
     }
@@ -49,8 +49,9 @@ public class IngredientServiceTest extends AbstractDBTest {
     public void updateExist() {
         String newName = "Шоколад";
         IngredientQtyType type = IngredientQtyType.GRAM;
-        Ingredient expectedIngredient = new Ingredient(ingredientId, componentService.getById(componentId), newName, 10.0, type, BigDecimal.valueOf(75).setScale(2));
-        Ingredient actualIngredient = ingredientService.getById(ingredientId);
+        var expectedIngredient =
+                new Ingredient(ingredientId, componentService.getById(componentId), newName, prepareBigDecimal(10.0), type, prepareBigDecimal(75.0));
+        var actualIngredient = ingredientService.getById(ingredientId);
         actualIngredient.setType(type);
         actualIngredient.setName(newName);
         assertThat(ingredientService.save(actualIngredient))

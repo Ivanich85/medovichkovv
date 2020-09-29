@@ -1,7 +1,6 @@
 package medovichkovvcalculationservice.repository;
 
-import medovichkovvcalculationservice.entities.Component;
-import medovichkovvcalculationservice.entities.Ingredient;
+import medovichkovvcalculationservice.entity.Ingredient;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
