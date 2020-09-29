@@ -29,7 +29,6 @@ public class CalculationServiceImpl implements CalculationService {
     @Override
     public RecipeDTO calculateRecipe(Long baseRecipeId, Long userId, BigDecimal expectedSquare) {
 
-        // TODO Получаем рецепт
         Recipe baseRecipe = recipeService.getByIdAndUser(baseRecipeId, userId);
 
         BigDecimal baseRecipeSquare = baseRecipe.getSquare();
