@@ -19,13 +19,17 @@ public class IngredientDTO extends AbstractDTO {
     private IngredientQtyType type;
     private BigDecimal cost;
 
-    public static IngredientDTO createFromIngredientNoCostAndWeight(Ingredient ingredient) {
+    public static IngredientDTO createFromIngredient(Ingredient ingredient) {
         IngredientDTO ingredientDTO = new IngredientDTO();
         if (ingredient == null) {
             return ingredientDTO;
         }
         ingredientDTO.setName(ingredient.getName());
         ingredientDTO.setType(ingredient.getType());
+        ingredientDTO.setCost(ingredient.getCost());
+        ingredientDTO.setWeight(ingredient.getWeight());
         return ingredientDTO;
     }
+
+
 }

@@ -6,6 +6,7 @@ import medovichkovvcalculationservice.enums.ComponentType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author ivand on 29.09.2020
@@ -18,9 +19,9 @@ public class ComponentDTO extends AbstractDTO {
 
     private ComponentType type;
     private Integer quantity;
-    private List<IngredientDTO> ingredients = new ArrayList<>();
+    private List<IngredientDTO> ingredientDTOs = new ArrayList<>();
 
-    public static ComponentDTO createFromComponentNoIngredients(Component component) {
+    public static ComponentDTO createFromComponent(Component component) {
         ComponentDTO componentDTO = new ComponentDTO();
         if (component == null) {
             return componentDTO;
@@ -28,7 +29,10 @@ public class ComponentDTO extends AbstractDTO {
         componentDTO.setName(component.getName());
         componentDTO.setQuantity(component.getQuantity());
         componentDTO.setType(component.getType());
+        componentDTO.setIngredientDTOs(
+                component.getIngredients().stream()
+                        .map(IngredientDTO::createFromIngredient)
+                        .collect(Collectors.toList()));
         return componentDTO;
     }
-
 }
