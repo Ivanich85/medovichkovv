@@ -4,8 +4,6 @@ import lombok.*;
 import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.enums.IngredientQtyType;
 
-import java.math.BigDecimal;
-
 /**
  * @author ivand on 29.09.2020
  */
@@ -15,9 +13,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 public class IngredientDTO extends AbstractDTO {
 
-    private BigDecimal weight;
     private IngredientQtyType type;
-    private BigDecimal cost;
 
     public static IngredientDTO createFromIngredient(Ingredient ingredient) {
         IngredientDTO ingredientDTO = new IngredientDTO();
@@ -30,6 +26,5 @@ public class IngredientDTO extends AbstractDTO {
         ingredientDTO.setWeight(ingredient.getWeight());
         return ingredientDTO;
     }
-
 
 }

@@ -1,11 +1,11 @@
-delete from mc_recipe where 1 = 1;
 delete from mc_ingredient where 1 = 1;
 delete from mc_component where 1 = 1;
+delete from mc_recipe where 1 = 1;
 
 insert into mc_recipe
-(id, user_id, name, square, creation_date, favorite)
+(id, user_id, name, square, cake, creation_date, favorite)
 values
-(100, 1, 'Медовик', 254.30, current_timestamp, true);
+(100, 1, 'Медовик', 254.30, 10, current_timestamp, true);
 
 insert into mc_component
 (id, recipe_id, name, quantity, type)

@@ -15,6 +15,7 @@ public class SquareCalculationService implements CalculationService {
 
     @Override
     public RecipeDTO calculate(Recipe baseRecipe, BigDecimal recalculationCoef) {
-        return null;
+        RecipeDTO recipeDTO = RecipeDTO.createFromRecipe(baseRecipe);
+        return recipeDTO;
     }
 }

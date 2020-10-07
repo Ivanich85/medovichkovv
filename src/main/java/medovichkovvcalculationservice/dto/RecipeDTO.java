@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+import static medovichkovvcalculationservice.calculation.CalculationUtils.getBigDecimalListSum;
+
 /**
  * @author ivand on 29.09.2020
  */
@@ -27,10 +30,16 @@ public class RecipeDTO extends AbstractDTO {
         }
         recipeDTO.setName(recipe.getName());
         recipeDTO.setSquare(recipe.getSquare());
-        recipeDTO.setComponentDTOs(
-                recipe.getComponents().stream()
-                        .map(ComponentDTO::createFromComponent)
-                        .collect(Collectors.toList()));
+        recipeDTO.setComponentDTOs(recipe.getComponents().stream()
+                .map(ComponentDTO::createFromComponent)
+                .collect(Collectors.toList()));
+        var componentDTOs = recipeDTO.getComponentDTOs();
+        recipeDTO.setWeight(getBigDecimalListSum(componentDTOs.stream()
+                .map(ComponentDTO::getWeight)
+                .collect(toList())));
+        recipeDTO.setCost(getBigDecimalListSum(componentDTOs.stream()
+                .map(ComponentDTO::getCost)
+                .collect(toList())));
         return recipeDTO;
     }
 }

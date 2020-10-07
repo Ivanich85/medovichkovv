@@ -1,7 +1,7 @@
 package medovichkovvcalculationservice.calculation;
 
 import medovichkovvcalculationservice.calculation.service.CalculationService;
-import medovichkovvcalculationservice.calculation.service.impl.LayerCalculationService;
+import medovichkovvcalculationservice.calculation.service.impl.CakeCalculationService;
 import medovichkovvcalculationservice.calculation.service.impl.SquareCalculationService;
 
 /**
@@ -13,8 +13,8 @@ public abstract class CalcServiceFactory {
         switch (serviceType) {
             case SQUARE:
                 return new SquareCalculationService();
-            case LAYER:
-                return new LayerCalculationService();
+            case CAKE:
+                return new CakeCalculationService();
             default:
                 throw new IllegalStateException(String.format("Calculation service for type %s doesn`t exist", serviceType));
         }

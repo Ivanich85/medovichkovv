@@ -20,7 +20,7 @@ public class RecipeServiceTest extends AbstractDBTest {
     @Test
     public void getByIdAndUser() {
         Recipe actual = recipeService.getByIdAndUser(recipeId, userId);
-        Recipe expected = new Recipe(recipeId, userId, null, "Медовик", prepareBigDecimal(254.3), LocalDateTime.now(), true, PrivacyType.ALL);
+        Recipe expected = new Recipe(recipeId, userId, null, "Медовик", prepareBigDecimal(254.3), 10, LocalDateTime.now(), true, PrivacyType.ALL);
         assertThat(actual)
                 .isEqualToIgnoringGivenFields(expected, "components", "creationDate");
     }
@@ -55,7 +55,7 @@ public class RecipeServiceTest extends AbstractDBTest {
 
     @Test
     public void saveNew() {
-        Recipe actual = recipeService.save(new Recipe(null, 2L, null, "Медовик", prepareBigDecimal(254.3), LocalDateTime.now(), true, PrivacyType.ALL));
+        Recipe actual = recipeService.save(new Recipe(null, 2L, null, "Медовик", prepareBigDecimal(254.3), 10, LocalDateTime.now(), true, PrivacyType.ALL));
         Recipe expected = recipeService.getByIdAndUser(actual.getId(), 2L);
         assertThat(actual).
                 isEqualToIgnoringGivenFields(expected, "creationDate", "components");
@@ -65,7 +65,7 @@ public class RecipeServiceTest extends AbstractDBTest {
     public void updateExist() {
         String newName = "Медовичок";
         boolean isFavourite = false;
-        Recipe expected = new Recipe(recipeId, userId, null, newName, prepareBigDecimal(254.3), LocalDateTime.now(), isFavourite, PrivacyType.ALL);
+        Recipe expected = new Recipe(recipeId, userId, null, newName, prepareBigDecimal(254.3), 10, LocalDateTime.now(), isFavourite, PrivacyType.ALL);
         Recipe actual = recipeService.getByIdAndUser(recipeId, userId);
         actual.setName(newName);
         actual.setFavorite(isFavourite);

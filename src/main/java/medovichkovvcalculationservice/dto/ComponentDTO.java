@@ -2,11 +2,14 @@ package medovichkovvcalculationservice.dto;
 
 import lombok.*;
 import medovichkovvcalculationservice.entity.Component;
+import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.enums.ComponentType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
+import static medovichkovvcalculationservice.calculation.CalculationUtils.getBigDecimalListSum;
 
 /**
  * @author ivand on 29.09.2020
@@ -29,10 +32,17 @@ public class ComponentDTO extends AbstractDTO {
         componentDTO.setName(component.getName());
         componentDTO.setQuantity(component.getQuantity());
         componentDTO.setType(component.getType());
-        componentDTO.setIngredientDTOs(
-                component.getIngredients().stream()
-                        .map(IngredientDTO::createFromIngredient)
-                        .collect(Collectors.toList()));
+
+        List<Ingredient> ingredients = component.getIngredients();
+        componentDTO.setIngredientDTOs(ingredients.stream()
+                .map(IngredientDTO::createFromIngredient)
+                .collect(toList()));
+        componentDTO.setWeight(getBigDecimalListSum(ingredients.stream()
+                .map(Ingredient::getWeight)
+                .collect(toList())));
+        componentDTO.setCost(getBigDecimalListSum(ingredients.stream()
+                .map(Ingredient::getCost)
+                .collect(toList())));
         return componentDTO;
     }
 }

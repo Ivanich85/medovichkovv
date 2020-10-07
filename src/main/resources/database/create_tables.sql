@@ -11,8 +11,9 @@ CREATE TABLE MC_RECIPE (
     USER_ID         BIGINT          NOT NULL ,
     NAME            VARCHAR(127)    NOT NULL ,
     SQUARE          NUMERIC(8,2)    NOT NULL ,
+    CAKE            NUMERIC(8,0)    NOT NULL ,
     CREATION_DATE   TIMESTAMP       NOT NULL ,
-    FAVORITE        BOOLEAN         DEFAULT FALSE ,
+    FAVORITE        BOOLEAN         DEFAULT FALSE NOT NULL ,
     PRIVACY         VARCHAR(16)     DEFAULT 'ALL' NOT NULL
 );
 
@@ -22,6 +23,7 @@ COMMENT ON COLUMN MC_RECIPE.ID IS 'Row id';
 COMMENT ON COLUMN MC_RECIPE.USER_ID IS 'Recipe owner id';
 COMMENT ON COLUMN MC_RECIPE.NAME IS 'Recipe name';
 COMMENT ON COLUMN MC_RECIPE.SQUARE IS 'Cake square (e.g. square, circle) in square centimeters';
+COMMENT ON COLUMN MC_RECIPE.CAKE IS 'Number of cakes (layers) into product';
 COMMENT ON COLUMN MC_RECIPE.CREATION_DATE IS 'Recipe first creation date';
 COMMENT ON COLUMN MC_RECIPE.FAVORITE IS 'Is recipe favourite for the owner';
 

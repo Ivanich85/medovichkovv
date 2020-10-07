@@ -9,10 +9,10 @@ import java.math.BigDecimal;
 /**
  * @author ivand on 30.09.2020
  */
-public class LayerCalculationService implements CalculationService {
+public class CakeCalculationService implements CalculationService {
 
     @Override
     public RecipeDTO calculate(Recipe baseRecipe, BigDecimal recalculationCoef) {
-        return null;
+        throw new IllegalStateException("Layer service doesn`t support");
     }
 }

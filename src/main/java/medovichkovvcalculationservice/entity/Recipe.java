@@ -46,6 +46,9 @@ public class Recipe implements Serializable {
     @Column(name = "SQUARE", nullable = false)
     private BigDecimal square;
 
+    @Column(name = "CAKE", nullable = false)
+    private Integer cakes;
+
     @Column(name = "CREATION_DATE", nullable = false)
     private LocalDateTime creationDate;
 
@@ -64,11 +67,13 @@ public class Recipe implements Serializable {
         return isFavorite == recipe.isFavorite &&
                 userId.equals(recipe.userId) &&
                 name.equals(recipe.name) &&
+                Objects.equals(square, recipe.square) &&
+                Objects.equals(cakes, recipe.cakes) &&
                 privacyType == recipe.privacyType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name, isFavorite, privacyType);
+        return Objects.hash(userId, name, square, cakes, isFavorite, privacyType);
     }
 }
