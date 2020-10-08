@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+import static medovichkovvcalculationservice.dto.DtoUtils.createFromRecipe;
+
 /**
  * @author ivand on 30.09.2020
  */
@@ -15,7 +17,7 @@ public class SquareCalculationService implements CalculationService {
 
     @Override
     public RecipeDTO calculate(Recipe baseRecipe, BigDecimal recalculationCoef) {
-        RecipeDTO recipeDTO = RecipeDTO.createFromRecipe(baseRecipe);
+        RecipeDTO recipeDTO = createFromRecipe(baseRecipe);
         return recipeDTO;
     }
 }
