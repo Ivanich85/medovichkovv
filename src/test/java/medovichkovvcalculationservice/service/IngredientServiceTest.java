@@ -2,18 +2,16 @@ package medovichkovvcalculationservice.service;
 
 import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.enums.IngredientQtyType;
-import medovichkovvcalculationservice.repository.IngredientRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static medovichkovvcalculationservice.service.TestUtils.prepareBigDecimal;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class IngredientServiceTest extends AbstractDBTest {
+public class IngredientServiceTest extends AbstractTest {
 
     @Autowired
     private IngredientService ingredientService;

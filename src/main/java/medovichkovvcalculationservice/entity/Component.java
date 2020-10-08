@@ -8,6 +8,7 @@ import medovichkovvcalculationservice.enums.ComponentType;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,7 +44,7 @@ public class Component implements Serializable {
     private Integer quantity;
 
     @OneToMany(mappedBy = "component", fetch = FetchType.EAGER)
-    private List<Ingredient> ingredients;
+    private List<Ingredient> ingredients = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

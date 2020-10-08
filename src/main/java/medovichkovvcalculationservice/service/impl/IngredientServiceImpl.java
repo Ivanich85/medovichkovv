@@ -1,9 +1,10 @@
-package medovichkovvcalculationservice.service;
+package medovichkovvcalculationservice.service.impl;
 
 import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.repository.ComponentRepository;
 import medovichkovvcalculationservice.repository.IngredientRepository;
+import medovichkovvcalculationservice.service.IngredientService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

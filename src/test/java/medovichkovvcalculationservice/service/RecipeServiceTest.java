@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import static medovichkovvcalculationservice.service.TestUtils.prepareBigDecimal;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RecipeServiceTest extends AbstractDBTest {
+public class RecipeServiceTest extends AbstractTest {
 
     @Autowired
     private RecipeService recipeService;

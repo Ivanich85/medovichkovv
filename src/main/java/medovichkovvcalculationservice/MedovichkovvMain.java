@@ -2,7 +2,7 @@ package medovichkovvcalculationservice;
 
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.repository.RecipeRepository;
-import medovichkovvcalculationservice.service.RecipeServiceImpl;
+import medovichkovvcalculationservice.service.impl.RecipeServiceImpl;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;

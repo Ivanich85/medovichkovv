@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,7 +39,7 @@ public class Recipe implements Serializable {
     private Long userId;
 
     @OneToMany(mappedBy = "recipe")
-    private List<Component> components;
+    private List<Component> components = new ArrayList<>();
 
     @Column(name = "NAME", nullable = false)
     private String name;

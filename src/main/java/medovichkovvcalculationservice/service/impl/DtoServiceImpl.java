@@ -1,19 +1,20 @@
-package medovichkovvcalculationservice.calculation.service.impl;
+package medovichkovvcalculationservice.service.impl;
 
 import lombok.extern.log4j.Log4j;
 import medovichkovvcalculationservice.calculation.CalcServiceFactory;
 import medovichkovvcalculationservice.calculation.CalculationUtils;
 import medovichkovvcalculationservice.calculation.ServiceType;
-import medovichkovvcalculationservice.calculation.service.RecalculationService;
 import medovichkovvcalculationservice.dto.RecipeDTO;
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.error.CalculationError;
+import medovichkovvcalculationservice.service.DtoService;
 import medovichkovvcalculationservice.service.RecipeService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
 import static java.math.BigDecimal.valueOf;
+import static medovichkovvcalculationservice.dto.DtoUtils.createFromRecipe;
 
 /**
  * Class for calculation new yummy
@@ -22,23 +23,29 @@ import static java.math.BigDecimal.valueOf;
  */
 @Service
 @Log4j
-public class RecalculationServiceImpl implements RecalculationService {
+public class DtoServiceImpl implements DtoService {
 
     private final RecipeService recipeService;
 
-    public RecalculationServiceImpl(RecipeService recipeService) {
+    public DtoServiceImpl(RecipeService recipeService) {
         this.recipeService = recipeService;
     }
 
     @Override
-    public RecipeDTO recalculateRecipe(Long baseRecipeId, Long userId, BigDecimal newSquare, Integer layers) {
-        ServiceType serviceType = checkServiceType(newSquare, layers);
-        Recipe recalcRecipe = recipeService.getByIdAndUser(baseRecipeId, userId);
+    public RecipeDTO recalculateRecipe(Long baseRecipeId, Long userId, BigDecimal newSquare, Integer cakes) {
+        ServiceType serviceType = checkServiceType(newSquare, cakes);
+        Recipe recalcRecipe = recipeService.getByIdAndUserWithComponents(baseRecipeId, userId);
         if (recalcRecipe == null) {
             throw new IllegalStateException(String.format("Recipe id %s for user %s not found", baseRecipeId, userId));
         }
-        var recalcCoef = getRecalculationCoef(recalcRecipe, newSquare, layers);
+        var recalcCoef = getRecalculationCoef(recalcRecipe, newSquare, cakes);
         return CalcServiceFactory.getCalcService(serviceType).calculate(recalcRecipe, recalcCoef);
+    }
+
+    @Override
+    public RecipeDTO getRecipeDto(Long recipeId, Long userId) {
+        Recipe recipe = recipeService.getByIdAndUser(recipeId, userId);
+        return createFromRecipe(recipe);
     }
 
     private ServiceType checkServiceType(BigDecimal newSquare, Integer cakes) {
@@ -51,9 +58,9 @@ public class RecalculationServiceImpl implements RecalculationService {
         return newSquare != null ? ServiceType.SQUARE : ServiceType.CAKE;
     }
 
-    private BigDecimal getRecalculationCoef(Recipe recalcRecipe, BigDecimal newSquare, Integer layers) {
+    private BigDecimal getRecalculationCoef(Recipe recalcRecipe, BigDecimal newSquare, Integer cakes) {
         return newSquare != null ?
-                CalculationUtils.divide(newSquare, recalcRecipe.getSquare(), 3) :
-                CalculationUtils.divide(valueOf(layers), valueOf(recalcRecipe.getCakes()), 3);
+                CalculationUtils.divide(newSquare, recalcRecipe.getSquare()) :
+                CalculationUtils.divide(valueOf(cakes), valueOf(recalcRecipe.getCakes()));
     }
 }

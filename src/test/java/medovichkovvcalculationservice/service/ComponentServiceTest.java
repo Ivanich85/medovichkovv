@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ComponentServiceTest extends AbstractDBTest {
+public class ComponentServiceTest extends AbstractTest {
 
     @Autowired
     private ComponentService componentService;
