@@ -25,12 +25,9 @@ public abstract class DtoUtils {
         recipeDTO.setName(recipe.getName());
         recipeDTO.setSquare(recipe.getSquare());
         recipeDTO.setComponentDTOs(recipe.getComponents().stream()
-                .map(component -> createFromComponent(component))
+                .map(DtoUtils::createFromComponent)
                 .collect(Collectors.toList()));
         var componentDTOs = recipeDTO.getComponentDTOs();
-        recipeDTO.setWeight(getListSum(componentDTOs.stream()
-                .map(ComponentDTO::getWeight)
-                .collect(toList())));
         recipeDTO.setCost(getListSum(componentDTOs.stream()
                 .map(ComponentDTO::getCost)
                 .collect(toList())));
@@ -48,11 +45,8 @@ public abstract class DtoUtils {
 
         List<Ingredient> ingredients = component.getIngredients();
         componentDTO.setIngredientDTOs(ingredients.stream()
-                .map(ingredient -> createFromIngredient(ingredient))
+                .map(DtoUtils::createFromIngredient)
                 .collect(toList()));
-        componentDTO.setWeight(getListSum(ingredients.stream()
-                .map(Ingredient::getWeight)
-                .collect(toList())));
         componentDTO.setCost(getListSum(ingredients.stream()
                 .map(Ingredient::getCost)
                 .collect(toList())));

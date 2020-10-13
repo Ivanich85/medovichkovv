@@ -13,6 +13,6 @@ public class CakeCalculationService implements CalculationService {
 
     @Override
     public RecipeDTO calculate(Recipe baseRecipe, BigDecimal recalculationCoef) {
-        throw new IllegalStateException("Layer service doesn`t support");
+        throw new IllegalStateException("Cake service doesn`t support");
     }
 }

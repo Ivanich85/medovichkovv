@@ -1,5 +1,6 @@
 package medovichkovvcalculationservice.dto;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,8 +12,8 @@ import java.math.BigDecimal;
  */
 @Getter
 @Setter
+@EqualsAndHashCode
 public abstract class AbstractDTO implements Serializable {
     private String name;
-    private BigDecimal weight;
     private BigDecimal cost;
 }

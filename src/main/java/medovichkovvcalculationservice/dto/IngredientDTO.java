@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import medovichkovvcalculationservice.enums.IngredientQtyType;
 
+import java.math.BigDecimal;
+
 /**
  * @author ivand on 29.09.2020
  */
@@ -14,5 +16,6 @@ import medovichkovvcalculationservice.enums.IngredientQtyType;
 public class IngredientDTO extends AbstractDTO {
 
     private IngredientQtyType type;
+    private BigDecimal weight;
 
 }

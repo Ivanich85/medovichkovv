@@ -5,6 +5,8 @@ import medovichkovvcalculationservice.calculation.service.impl.CakeCalculationSe
 import medovichkovvcalculationservice.calculation.service.impl.SquareCalculationService;
 
 /**
+ * Factory for different type of calculation services
+ *
  * @author ivand on 30.09.2020
  */
 public abstract class CalcServiceFactory {

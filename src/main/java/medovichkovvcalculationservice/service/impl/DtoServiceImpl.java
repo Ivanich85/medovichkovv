@@ -34,12 +34,12 @@ public class DtoServiceImpl implements DtoService {
     @Override
     public RecipeDTO recalculateRecipe(Long baseRecipeId, Long userId, BigDecimal newSquare, Integer cakes) {
         ServiceType serviceType = checkServiceType(newSquare, cakes);
-        Recipe recalcRecipe = recipeService.getByIdAndUserWithComponents(baseRecipeId, userId);
-        if (recalcRecipe == null) {
+        Recipe baseRecipe = recipeService.getByIdAndUserWithComponents(baseRecipeId, userId);
+        if (baseRecipe == null) {
             throw new IllegalStateException(String.format("Recipe id %s for user %s not found", baseRecipeId, userId));
         }
-        var recalcCoef = getRecalculationCoef(recalcRecipe, newSquare, cakes);
-        return CalcServiceFactory.getCalcService(serviceType).calculate(recalcRecipe, recalcCoef);
+        var recalcCoef = getRecalculationCoef(baseRecipe, newSquare, cakes);
+        return CalcServiceFactory.getCalcService(serviceType).calculate(baseRecipe, recalcCoef);
     }
 
     @Override
