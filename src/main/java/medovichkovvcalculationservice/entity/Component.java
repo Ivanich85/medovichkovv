@@ -44,7 +44,7 @@ public class Component implements Serializable {
     private Integer quantity;
 
     @OneToMany(mappedBy = "component", fetch = FetchType.EAGER)
-    private List<Ingredient> ingredients = new ArrayList<>();
+    private List<RecipeIngredient> ingredients = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

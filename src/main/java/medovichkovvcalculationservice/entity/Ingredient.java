@@ -10,10 +10,11 @@ import medovichkovvcalculationservice.enums.IngredientQtyType;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 /**
- * Component`s ingredient
+ * Base ingredient
  */
 @Entity
 @Table(name="MC_INGREDIENT")
@@ -29,10 +30,6 @@ public class Ingredient implements Serializable {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "COMPONENT_ID", nullable = false)
-    private Component component;
-
     @Column(name = "NAME", nullable = false)
     private String name;
 
@@ -43,6 +40,9 @@ public class Ingredient implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private IngredientQtyType type;
 
+    @OneToMany(mappedBy = "ingredient")
+    private List<RecipeIngredient> recipeIngredient;
+
     @Column(name = "COST", nullable = false)
     private BigDecimal cost;
 
@@ -51,8 +51,7 @@ public class Ingredient implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
-        return component.equals(that.component) &&
-                name.equals(that.name) &&
+        return name.equals(that.name) &&
                 weight.equals(that.weight) &&
                 type == that.type &&
                 cost.equals(that.cost);
@@ -60,6 +59,6 @@ public class Ingredient implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(component, name, weight, type, cost);
+        return Objects.hash(name, weight, type, cost);
     }
 }

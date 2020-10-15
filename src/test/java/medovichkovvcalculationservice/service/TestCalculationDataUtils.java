@@ -81,7 +81,7 @@ public abstract class TestCalculationDataUtils {
                         "Яйца", BigDecimal.valueOf(10), IngredientQtyType.PIECE, BigDecimal.valueOf(75));
             case TWO:
                 return new Ingredient(10001L, null,
-                        "Сахар", BigDecimal.valueOf(10), IngredientQtyType.GRAM, BigDecimal.valueOf(35));
+                        "Сахар", BigDecimal.valueOf(1000), IngredientQtyType.GRAM, BigDecimal.valueOf(35));
             case THREE:
                 return new Ingredient(10006L, null,
                         "Сметана", BigDecimal.valueOf(350), IngredientQtyType.GRAM, BigDecimal.valueOf(80));
