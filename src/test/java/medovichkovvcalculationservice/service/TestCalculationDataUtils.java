@@ -36,8 +36,8 @@ public abstract class TestCalculationDataUtils {
     }
 
     public static Recipe createRecipe() {
-        return new Recipe(100L, 1L, createComponents(List.of(ONE, TWO, THREE)),
-                "Медовик", BigDecimal.valueOf(254.30), 10,
+        return new Recipe(null, 1L, createComponents(List.of(ONE, TWO, THREE)),
+                "Тестовый медовик", BigDecimal.valueOf(254.30), 10,
                 LocalDateTime.now(), true, PrivacyType.ALL);
     }
 
@@ -53,13 +53,13 @@ public abstract class TestCalculationDataUtils {
     public static Component createComponent(EntityNumber entityNumber) {
         switch (entityNumber) {
             case ONE:
-                return new Component(1000L, null, "Коржи",
+                return new Component(null, null, "Коржи",
                         ComponentType.CAKE, 12, createRecipeIngredients(List.of(ONE, TWO)));
             case TWO:
-                return new Component(1001L, null, "Крем сметанный",
+                return new Component(null, null, "Крем сметанный",
                         ComponentType.CREAM, 1, createRecipeIngredients(List.of(THREE, FOUR)));
             case THREE:
-                return new Component(1002L, null, "Крем заварной",
+                return new Component(null, null, "Крем заварной",
                         ComponentType.CUSTARD, 1, createRecipeIngredients(List.of(FIVE, SIX)));
             default:
                 return null;
@@ -78,17 +78,17 @@ public abstract class TestCalculationDataUtils {
     public static RecipeIngredient createRecipeIngredient(EntityNumber entityNumber) {
         switch (entityNumber) {
             case ONE:
-                return new RecipeIngredient(100000L, createIngredient(ONE), null, BigDecimal.valueOf(3));
+                return new RecipeIngredient(null, createIngredient(ONE), null, BigDecimal.valueOf(3));
             case TWO:
-                return new RecipeIngredient(100001L, createIngredient(TWO), null, BigDecimal.valueOf(500));
+                return new RecipeIngredient(null, createIngredient(TWO), null, BigDecimal.valueOf(500));
             case THREE:
-                return new RecipeIngredient(100002L, createIngredient(THREE), null, BigDecimal.valueOf(350));
+                return new RecipeIngredient(null, createIngredient(THREE), null, BigDecimal.valueOf(350));
             case FOUR:
-                return new RecipeIngredient(100003L, createIngredient(FOUR), null, BigDecimal.valueOf(100));
+                return new RecipeIngredient(null, createIngredient(FOUR), null, BigDecimal.valueOf(100));
             case FIVE:
-                return new RecipeIngredient(100004L, createIngredient(FIVE), null, BigDecimal.valueOf(500));
+                return new RecipeIngredient(null, createIngredient(FIVE), null, BigDecimal.valueOf(500));
             case SIX:
-                return new RecipeIngredient(100005L, createIngredient(SIX), null, BigDecimal.valueOf(5));
+                return new RecipeIngredient(null, createIngredient(SIX), null, BigDecimal.valueOf(5));
             default:
                 return null;
         }
@@ -97,22 +97,22 @@ public abstract class TestCalculationDataUtils {
     public static Ingredient createIngredient(EntityNumber entityNumber) {
         switch (entityNumber) {
             case ONE:
-                return new Ingredient(10000L,
+                return new Ingredient(null,
                         "Яйца", BigDecimal.valueOf(10), IngredientQtyType.PIECE, null, BigDecimal.valueOf(75));
             case TWO:
-                return new Ingredient(10001L,
+                return new Ingredient(null,
                         "Сахар", BigDecimal.valueOf(1000), IngredientQtyType.GRAM, null, BigDecimal.valueOf(35));
             case THREE:
-                return new Ingredient(10006L,
+                return new Ingredient(null,
                         "Сметана", BigDecimal.valueOf(350), IngredientQtyType.GRAM, null, BigDecimal.valueOf(80));
             case FOUR:
-                return new Ingredient(10007L,
+                return new Ingredient(null,
                         "Сахарная пудра", BigDecimal.valueOf(1000), IngredientQtyType.GRAM, null, BigDecimal.valueOf(100));
             case FIVE:
-                return new Ingredient(10010L,
+                return new Ingredient(null,
                         "Молоко", BigDecimal.valueOf(1000), IngredientQtyType.GRAM, null, BigDecimal.valueOf(50));
             case SIX:
-                return new Ingredient(10011L,
+                return new Ingredient(null,
                         "Желтки", BigDecimal.valueOf(10), IngredientQtyType.PIECE, null, BigDecimal.valueOf(75));
             default:
                 return null;

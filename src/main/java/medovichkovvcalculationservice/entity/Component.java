@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import medovichkovvcalculationservice.configuration.DataSourceConfig;
 import medovichkovvcalculationservice.enums.ComponentType;
 
+import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public class Component implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "componentSeq")
-    @SequenceGenerator(name = "componentSeq", sequenceName = "MC_COMPONENT_SEQ")
+    @SequenceGenerator(name = "componentSeq", sequenceName = "MC_COMPONENT_SEQ", allocationSize = 1)
     @Column(name = "ID", nullable = false)
     private Long id;
 

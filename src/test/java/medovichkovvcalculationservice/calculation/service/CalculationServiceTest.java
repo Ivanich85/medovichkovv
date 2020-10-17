@@ -2,18 +2,19 @@ package medovichkovvcalculationservice.calculation.service;
 
 import medovichkovvcalculationservice.dto.RecipeDTO;
 import medovichkovvcalculationservice.error.CalculationError;
-import medovichkovvcalculationservice.service.AbstractTest;
 import medovichkovvcalculationservice.service.TestCalculationDataUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class CalculationServiceTest extends AbstractTest {
+@SpringBootTest
+class CalculationServiceTest {
 
     @Autowired
     @Qualifier("square")

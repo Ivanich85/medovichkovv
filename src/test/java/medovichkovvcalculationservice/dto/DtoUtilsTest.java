@@ -3,15 +3,17 @@ package medovichkovvcalculationservice.dto;
 import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.entity.RecipeIngredient;
-import medovichkovvcalculationservice.service.AbstractTest;
 import medovichkovvcalculationservice.service.TestCalculationDataUtils;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static medovichkovvcalculationservice.service.TestCalculationDataUtils.EntityNumber.ONE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class DtoUtilsTest extends AbstractTest {
+@SpringBootTest
+class DtoUtilsTest {
 
     @Test
     void createFromIngredient() {
@@ -36,5 +38,12 @@ class DtoUtilsTest extends AbstractTest {
         RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
         RecipeDTO actualDTO = DtoUtils.createFromRecipe(expectedRecipe);
         assertThat(actualDTO).isEqualTo(expectedDTO);
+    }
+
+    @Test
+    void createFromRecipeNull() {
+        assertThrows(IllegalStateException.class,
+                () -> DtoUtils.createFromRecipe(null),
+                "Recipe can not be null");
     }
 }

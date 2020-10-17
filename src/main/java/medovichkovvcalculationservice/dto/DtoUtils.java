@@ -23,7 +23,7 @@ public abstract class DtoUtils {
     public static RecipeDTO createFromRecipe(Recipe recipe) {
         RecipeDTO recipeDTO = new RecipeDTO();
         if (recipe == null) {
-            return recipeDTO;
+            throw new IllegalStateException("Recipe can not be null");
         }
         recipeDTO.setName(recipe.getName());
         recipeDTO.setSquare(recipe.getSquare());

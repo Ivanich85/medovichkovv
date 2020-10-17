@@ -1,14 +1,15 @@
 package medovichkovvcalculationservice.calculation;
 
-import medovichkovvcalculationservice.service.AbstractTest;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CalculationServiceUtilsTest extends AbstractTest {
+@SpringBootTest
+class CalculationServiceUtilsTest {
 
     @Test
     void multiply() {

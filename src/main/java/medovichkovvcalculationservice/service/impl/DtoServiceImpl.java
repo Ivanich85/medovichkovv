@@ -44,8 +44,7 @@ public class DtoServiceImpl implements DtoService {
 
     @Override
     public RecipeDTO getRecipeDto(Long recipeId, Long userId) {
-        Recipe recipe = recipeService.getByIdAndUser(recipeId, userId);
-        return createFromRecipe(recipe);
+        return createFromRecipe(recipeService.getByIdAndUser(recipeId, userId));
     }
 
     private ServiceType checkServiceType(BigDecimal newSquare, Integer cakes) {

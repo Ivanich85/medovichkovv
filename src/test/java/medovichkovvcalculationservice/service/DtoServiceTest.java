@@ -5,21 +5,25 @@ import medovichkovvcalculationservice.error.CalculationError;
 import medovichkovvcalculationservice.repository.RecipeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
 
-class DtoServiceTest extends AbstractTest {
+@SpringBootTest
+class DtoServiceTest {
 
     @Autowired
     private DtoService dtoService;
 
-    @Mock
+    @MockBean
     private RecipeRepository recipeRepository;
 
     @Test
@@ -39,15 +43,14 @@ class DtoServiceTest extends AbstractTest {
     void recalculateRecipeNotFound() {
         lenient().when(recipeRepository.getByIdAndUserWithComponents(any(), any())).thenReturn(null);
         Assertions.assertThrows(IllegalStateException.class,
-                () -> dtoService.recalculateRecipe(null, null, BigDecimal.ONE, null));
+                () -> dtoService.recalculateRecipe(1L, 2L, BigDecimal.ONE, null),
+                "Recipe id 1 for user 2 not found");
     }
 
     @Test
-    void recalculateRecipe() {
-        //doReturn(TestCalculationDataUtils.createRecipe()).when(recipeRepository).getByIdAndUserWithComponents(1L, 2L);
-        when(recipeRepository.getByIdAndUserWithComponents(any(Long.class), any(Long.class))).thenReturn(TestCalculationDataUtils.createRecipe());
-        //when(recipeRepository.getByIdAndUserWithComponents(any(), any())).thenReturn(TestCalculationDataUtils.createRecipe());
-        RecipeDTO actualDTO = dtoService.recalculateRecipe(any(Long.class), any(Long.class), BigDecimal.valueOf(432.31), null);
+    void recalculateRecipe_1_70_coef() {
+        when(recipeRepository.getByIdAndUserWithComponents(anyLong(), anyLong())).thenReturn(TestCalculationDataUtils.createRecipe());
+        RecipeDTO actualDTO = dtoService.recalculateRecipe(1L, 2L, BigDecimal.valueOf(432.31), null);
         RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
         expectedDTO.setCost(BigDecimal.valueOf(327.4));
         assertThat(actualDTO).isEqualToIgnoringGivenFields(expectedDTO, "componentDTOs");

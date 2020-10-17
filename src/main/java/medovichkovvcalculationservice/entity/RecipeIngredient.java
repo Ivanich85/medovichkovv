@@ -25,7 +25,7 @@ public class RecipeIngredient implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "recipeIngrSeq")
-    @SequenceGenerator(name = "recipeIngrSeq", sequenceName = "MC_RECIPE_INGREDIENT_SEQ")
+    @SequenceGenerator(name = "recipeIngrSeq", sequenceName = "MC_RECIPE_INGREDIENT_SEQ", allocationSize = 1)
     @Column(name = "ID", nullable = false)
     private Long id;
 
