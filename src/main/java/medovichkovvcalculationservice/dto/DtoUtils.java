@@ -1,9 +1,12 @@
 package medovichkovvcalculationservice.dto;
 
+import medovichkovvcalculationservice.calculation.CalculationUtils;
 import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.entity.Recipe;
+import medovichkovvcalculationservice.entity.RecipeIngredient;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,25 +46,32 @@ public abstract class DtoUtils {
         componentDTO.setQuantity(component.getQuantity());
         componentDTO.setType(component.getType());
 
-        List<Ingredient> ingredients = component.getIngredients();
-        componentDTO.setIngredientDTOs(ingredients.stream()
-                .map(DtoUtils::createFromIngredient)
+        List<RecipeIngredient> ingredients = component.getIngredients();
+        componentDTO.setRecipeIngredientDTOS(ingredients.stream()
+                .map(DtoUtils::createFromRecipeIngredient)
                 .collect(toList()));
-        componentDTO.setCost(getListSum(ingredients.stream()
-                .map(Ingredient::getCost)
+        componentDTO.setCost(getListSum(componentDTO.getRecipeIngredientDTOS().stream()
+                .map(RecipeIngredientDTO::getCost)
                 .collect(toList())));
         return componentDTO;
     }
 
-    public static IngredientDTO createFromIngredient(Ingredient ingredient) {
-        IngredientDTO ingredientDTO = new IngredientDTO();
-        if (ingredient == null) {
-            return ingredientDTO;
+    public static RecipeIngredientDTO createFromRecipeIngredient(RecipeIngredient recipeIngredient) {
+        RecipeIngredientDTO recipeIngredientDTO = new RecipeIngredientDTO();
+        if (recipeIngredient == null) {
+            return recipeIngredientDTO;
         }
-        ingredientDTO.setName(ingredient.getName());
-        ingredientDTO.setType(ingredient.getType());
-        ingredientDTO.setCost(ingredient.getCost());
-        ingredientDTO.setWeight(ingredient.getWeight());
-        return ingredientDTO;
+        Ingredient ingredient = recipeIngredient.getIngredient();
+        BigDecimal coef = CalculationUtils.divide(recipeIngredient.getQuantity(), ingredient.getWeight());
+
+        recipeIngredientDTO.setName(ingredient.getName());
+        recipeIngredientDTO.setType(ingredient.getType());
+        recipeIngredientDTO.setCost(calcWithCoef(ingredient.getCost(), coef));
+        recipeIngredientDTO.setWeight(calcWithCoef(ingredient.getWeight(), coef));
+        return recipeIngredientDTO;
+    }
+
+    private static BigDecimal calcWithCoef(BigDecimal value, BigDecimal coef) {
+        return CalculationUtils.multiply(value, coef);
     }
 }

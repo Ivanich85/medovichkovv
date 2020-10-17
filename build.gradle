@@ -34,6 +34,8 @@ dependencies {
     testCompile "org.junit.jupiter:junit-jupiter-engine:5.6.2"
     testCompile "org.springframework:spring-test:5.2.2.RELEASE"
     testCompile "org.assertj:assertj-core:3.16.1"
+    testCompile "org.mockito:mockito-core:3.5.13"
+    implementation 'org.mockito:mockito-junit-jupiter:3.5.13'
 }
 
 compileJava {

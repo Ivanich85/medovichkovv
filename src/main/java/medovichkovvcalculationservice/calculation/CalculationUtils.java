@@ -12,11 +12,11 @@ import java.util.List;
  */
 public abstract class CalculationUtils {
 
-    public static BigDecimal multiply(BigDecimal first, BigDecimal second, int precision) {
+    public static BigDecimal multiply(BigDecimal first, BigDecimal second) {
         if (first == null || second == null) {
             return BigDecimal.ZERO;
         }
-        return first.multiply(second).round(new MathContext(precision, RoundingMode.HALF_UP));
+        return first.multiply(second).round(new MathContext(3, RoundingMode.HALF_UP));
     }
 
     public static BigDecimal divide(BigDecimal dividend, BigDecimal divisor) {

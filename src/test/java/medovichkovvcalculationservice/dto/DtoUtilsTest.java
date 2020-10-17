@@ -1,8 +1,8 @@
 package medovichkovvcalculationservice.dto;
 
 import medovichkovvcalculationservice.entity.Component;
-import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.entity.Recipe;
+import medovichkovvcalculationservice.entity.RecipeIngredient;
 import medovichkovvcalculationservice.service.AbstractTest;
 import medovichkovvcalculationservice.service.TestCalculationDataUtils;
 import org.junit.jupiter.api.Test;
@@ -15,9 +15,9 @@ class DtoUtilsTest extends AbstractTest {
 
     @Test
     void createFromIngredient() {
-        Ingredient expectedIngredient = TestCalculationDataUtils.createIngredient(ONE);
-        IngredientDTO expectedDTO = TestCalculationDataUtils.createIngredientDTO();
-        IngredientDTO actualDTO = DtoUtils.createFromIngredient(expectedIngredient);
+        RecipeIngredient expectedIngredient = TestCalculationDataUtils.createRecipeIngredient(ONE);
+        RecipeIngredientDTO expectedDTO = TestCalculationDataUtils.createIngredientDTO();
+        RecipeIngredientDTO actualDTO = DtoUtils.createFromRecipeIngredient(expectedIngredient);
         assertEquals(expectedDTO, actualDTO);
     }
 
@@ -26,8 +26,8 @@ class DtoUtilsTest extends AbstractTest {
         Component expectedComponent = TestCalculationDataUtils.createComponent(ONE);
         ComponentDTO expectedDTO = TestCalculationDataUtils.createComponentDTO();
         ComponentDTO actualDTO = DtoUtils.createFromComponent(expectedComponent);
-        assertEquals(2, actualDTO.getIngredientDTOs().size());
-        assertThat(actualDTO).isEqualToIgnoringGivenFields(expectedDTO, "ingredientDTOs");
+        assertEquals(2, actualDTO.getRecipeIngredientDTOS().size());
+        assertThat(actualDTO).isEqualToIgnoringGivenFields(expectedDTO, "recipeIngredientDTOS");
     }
 
     @Test

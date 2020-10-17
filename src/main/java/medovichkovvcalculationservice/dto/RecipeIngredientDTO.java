@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-public class IngredientDTO extends AbstractDTO {
+public class RecipeIngredientDTO extends AbstractDTO {
 
     private IngredientQtyType type;
     private BigDecimal weight;

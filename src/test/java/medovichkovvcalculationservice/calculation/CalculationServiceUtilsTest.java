@@ -12,28 +12,28 @@ class CalculationServiceUtilsTest extends AbstractTest {
 
     @Test
     void multiply() {
-        assertThat(BigDecimal.valueOf(15.200))
-                .isEqualTo(CalculationUtils.multiply(BigDecimal.valueOf(5), BigDecimal.valueOf(3.04), 3));
+        assertThat(BigDecimal.valueOf(15.20))
+                .isEqualTo(CalculationUtils.multiply(BigDecimal.valueOf(5), BigDecimal.valueOf(3.04)));
     }
 
     @Test
     void multiplyRoundUp() {
-        assertThat(BigDecimal.valueOf(15.100))
-                .isEqualTo(CalculationUtils.multiply(BigDecimal.valueOf(5), BigDecimal.valueOf(3.01), 3));
+        assertThat(BigDecimal.valueOf(15.10))
+                .isEqualTo(CalculationUtils.multiply(BigDecimal.valueOf(5), BigDecimal.valueOf(3.01)));
     }
 
     @Test
     void multiplyRoundDown() {
-        assertThat(BigDecimal.valueOf(12.000))
-                .isEqualTo(CalculationUtils.multiply(BigDecimal.valueOf(4), BigDecimal.valueOf(3.01), 3));
+        assertThat(BigDecimal.valueOf(12.00))
+                .isEqualTo(CalculationUtils.multiply(BigDecimal.valueOf(4), BigDecimal.valueOf(3.01)));
     }
 
     @Test
     void multiplyNull() {
         assertThat(BigDecimal.ZERO)
-                .isEqualTo(CalculationUtils.multiply(null, BigDecimal.valueOf(3.04), 3));
+                .isEqualTo(CalculationUtils.multiply(null, BigDecimal.valueOf(3.04)));
         assertThat(BigDecimal.ZERO)
-                .isEqualTo(CalculationUtils.multiply(BigDecimal.valueOf(3.04), null, 3));
+                .isEqualTo(CalculationUtils.multiply(BigDecimal.valueOf(3.04), null));
     }
 
     @Test

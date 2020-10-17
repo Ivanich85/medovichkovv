@@ -2,7 +2,7 @@ package medovichkovvcalculationservice.service.impl;
 
 import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.repository.ComponentRepository;
-import medovichkovvcalculationservice.repository.IngredientRepository;
+import medovichkovvcalculationservice.repository.RecipeIngredientRepository;
 import medovichkovvcalculationservice.service.ComponentService;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,12 @@ import java.util.List;
 public class ComponentServiceImpl implements ComponentService {
 
     private final ComponentRepository componentRepository;
-    private final IngredientRepository ingredientRepository;
+    private final RecipeIngredientRepository recipeIngredientRepository;
 
     public ComponentServiceImpl(ComponentRepository componentRepository,
-                                IngredientRepository ingredientRepository) {
+                                RecipeIngredientRepository recipeIngredientRepository) {
         this.componentRepository = componentRepository;
-        this.ingredientRepository = ingredientRepository;
+        this.recipeIngredientRepository = recipeIngredientRepository;
     }
 
     @Override
@@ -40,13 +40,13 @@ public class ComponentServiceImpl implements ComponentService {
 
     @Override
     public boolean delete(Long componentId) {
-        return ingredientRepository.deleteAllForComponent(componentId)
+        return recipeIngredientRepository.deleteAllForComponent(componentId)
                 && componentRepository.delete(componentId);
     }
 
     @Override
     public boolean deleteAllForRecipe(Long recipeId) {
-        return ingredientRepository.deleteAllForRecipe(recipeId)
+        return recipeIngredientRepository.deleteAllForRecipe(recipeId)
                 && componentRepository.deleteAllForRecipe(recipeId);
     }
 }

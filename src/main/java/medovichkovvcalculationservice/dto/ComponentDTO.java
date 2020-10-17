@@ -18,5 +18,5 @@ public class ComponentDTO extends AbstractDTO {
 
     private ComponentType type;
     private Integer quantity;
-    private List<IngredientDTO> ingredientDTOs = new ArrayList<>();
+    private List<RecipeIngredientDTO> recipeIngredientDTOS = new ArrayList<>();
 }

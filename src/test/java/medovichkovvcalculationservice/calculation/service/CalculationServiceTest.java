@@ -21,20 +21,47 @@ class CalculationServiceTest extends AbstractTest {
 
     @Test
     void calculateNullRecipe() {
-        assertThat(new RecipeDTO())
-                .isEqualTo(squareService.calculate(null, BigDecimal.ONE));
+        assertThrows(CalculationError.class,
+                () -> squareService.calculate(TestCalculationDataUtils.createRecipe(), null),
+                "Recalculation coefficient can`t be null");
     }
 
     @Test
     void calculateNullRecalcCoef() {
         assertThrows(CalculationError.class,
-                () -> squareService.calculate(TestCalculationDataUtils.createRecipe(), null));
+                () -> squareService.calculate(TestCalculationDataUtils.createRecipe(), null),
+                "Base recipe can`t be null");
     }
 
     @Test
-    void calculate() {
-        RecipeDTO actualDTO = squareService.calculate(TestCalculationDataUtils.createRecipe(), BigDecimal.valueOf(2));
+    void checkNewRecipeDtoSum_0_00() {
+        RecipeDTO actualDTO = squareService.calculate(TestCalculationDataUtils.createRecipe(), BigDecimal.valueOf(0));
         RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
-        assertThat(actualDTO).isEqualTo(expectedDTO);
+        expectedDTO.setCost(BigDecimal.valueOf(0.0));
+        assertThat(actualDTO).isEqualToIgnoringGivenFields(expectedDTO, "componentDTOs");
+    }
+
+    @Test
+    void checkNewRecipeDtoSum_0_45() {
+        RecipeDTO actualDTO = squareService.calculate(TestCalculationDataUtils.createRecipe(), BigDecimal.valueOf(0.45));
+        RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
+        expectedDTO.setCost(BigDecimal.valueOf(86.68));
+        assertThat(actualDTO).isEqualToIgnoringGivenFields(expectedDTO, "componentDTOs");
+    }
+
+    @Test
+    void checkNewRecipeDtoSum_1_30() {
+        RecipeDTO actualDTO = squareService.calculate(TestCalculationDataUtils.createRecipe(), BigDecimal.valueOf(1.3));
+        RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
+        expectedDTO.setCost(BigDecimal.valueOf(250.4));
+        assertThat(actualDTO).isEqualToIgnoringGivenFields(expectedDTO, "componentDTOs");
+    }
+
+    @Test
+    void checkNewRecipeDtoSum_1_70() {
+        RecipeDTO actualDTO = squareService.calculate(TestCalculationDataUtils.createRecipe(), BigDecimal.valueOf(1.7));
+        RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
+        expectedDTO.setCost(BigDecimal.valueOf(327.4));
+        assertThat(actualDTO).isEqualToIgnoringGivenFields(expectedDTO, "componentDTOs");
     }
 }

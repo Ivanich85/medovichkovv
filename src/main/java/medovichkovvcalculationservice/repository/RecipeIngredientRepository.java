@@ -1,6 +1,7 @@
 package medovichkovvcalculationservice.repository;
 
 import medovichkovvcalculationservice.entity.Ingredient;
+import medovichkovvcalculationservice.entity.RecipeIngredient;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,32 +13,32 @@ import java.util.stream.Collectors;
  */
 @Repository
 @Transactional
-public class IngredientRepository extends AbstractRepository {
+public class RecipeIngredientRepository extends AbstractRepository {
 
     @Transactional(readOnly = true)
-    public Ingredient getById(Long ingredientId) {
-        return entityManager.find(Ingredient.class, ingredientId);
+    public RecipeIngredient getById(Long ingredientId) {
+        return entityManager.find(RecipeIngredient.class, ingredientId);
     }
 
     @Transactional(readOnly = true)
-    public List<Ingredient> getByComponentId(Long componentId) {
+    public List<RecipeIngredient> getByComponentId(Long componentId) {
         return entityManager.createQuery(
-                "select i from Ingredient i " +
-                        "where i.component.id = :componentId", Ingredient.class)
+                "select i from RecipeIngredient i " +
+                        "where i.component.id = :componentId", RecipeIngredient.class)
                 .setParameter("componentId", componentId)
                 .getResultList();
     }
 
     @Transactional(readOnly = true)
-    public List<Ingredient> getByRecipeId(Long recipeId) {
+    public List<RecipeIngredient> getByRecipeId(Long recipeId) {
         return entityManager.createQuery(
-                "select i from Ingredient i " +
-                        "where i.component.recipe.id = :recipeId", Ingredient.class)
+                "select i from RecipeIngredient i " +
+                        "where i.component.recipe.id = :recipeId", RecipeIngredient.class)
                 .setParameter("recipeId", recipeId)
                 .getResultList();
     }
 
-    public Ingredient save(Ingredient ingredient) {
+    public RecipeIngredient save(RecipeIngredient ingredient) {
         if (ingredient.getId() == null) {
             entityManager.persist(ingredient);
             return ingredient;
@@ -57,7 +58,7 @@ public class IngredientRepository extends AbstractRepository {
     public boolean deleteAllForComponent(Long componentId) {
         return entityManager.createQuery(
                 "delete " +
-                        "from Ingredient i " +
+                        "from RecipeIngredient i " +
                         "where i.component.id = :componentId")
                 .setParameter("componentId", componentId)
                 .executeUpdate() != 0;
@@ -66,7 +67,7 @@ public class IngredientRepository extends AbstractRepository {
     public boolean deleteAllForComponents(List<Long> componentIds) {
         return entityManager.createQuery(
                 "delete " +
-                        "from Ingredient i " +
+                        "from RecipeIngredient i " +
                         "where i.component.id in :componentIds")
                 .setParameter("componentIds", componentIds)
                 .executeUpdate() != 0;
@@ -74,7 +75,7 @@ public class IngredientRepository extends AbstractRepository {
 
     public boolean deleteAllForRecipe(Long recipeId) {
         List<Long> recipeIds = getByRecipeId(recipeId).stream()
-                .map(Ingredient::getId)
+                .map(RecipeIngredient::getId)
                 .collect(Collectors.toList());
         return entityManager.createQuery(
                 "delete " +

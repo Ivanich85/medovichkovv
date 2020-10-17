@@ -2,7 +2,7 @@ package medovichkovvcalculationservice.service.impl;
 
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.repository.ComponentRepository;
-import medovichkovvcalculationservice.repository.IngredientRepository;
+import medovichkovvcalculationservice.repository.RecipeIngredientRepository;
 import medovichkovvcalculationservice.repository.RecipeRepository;
 import medovichkovvcalculationservice.service.RecipeService;
 import org.springframework.stereotype.Service;
@@ -16,14 +16,14 @@ import java.util.List;
 public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository recipeRepository;
     private final ComponentRepository componentRepository;
-    private final IngredientRepository ingredientRepository;
+    private final RecipeIngredientRepository recipeIngredientRepository;
 
     public RecipeServiceImpl(RecipeRepository recipeRepository,
                              ComponentRepository componentRepository,
-                             IngredientRepository ingredientRepository) {
+                             RecipeIngredientRepository recipeIngredientRepository) {
         this.recipeRepository = recipeRepository;
         this.componentRepository = componentRepository;
-        this.ingredientRepository = ingredientRepository;
+        this.recipeIngredientRepository = recipeIngredientRepository;
     }
 
     @Override
@@ -31,6 +31,7 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.getByIdAndUser(recipeId, userId);
     }
 
+    @Override
     public Recipe getByIdAndUserWithComponents(Long recipeId, Long userId) {
         return recipeRepository.getByIdAndUserWithComponents(recipeId, userId);
     }
@@ -52,7 +53,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public boolean delete(Long recipeId, Long userId) {
-        return ingredientRepository.deleteAllForComponent(recipeId)
+        return recipeIngredientRepository.deleteAllForComponent(recipeId)
                 && componentRepository.deleteAllForRecipe(recipeId)
                 && recipeRepository.delete(recipeId, userId);
     }
