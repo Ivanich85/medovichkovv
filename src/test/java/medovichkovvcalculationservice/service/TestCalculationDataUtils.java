@@ -26,6 +26,8 @@ import static medovichkovvcalculationservice.service.TestCalculationDataUtils.En
  */
 public abstract class TestCalculationDataUtils {
 
+    private static final String TEST_RECIPE_NAME = "Тестовый медовик";
+
     public enum EntityNumber {
         ONE,
         TWO,
@@ -37,7 +39,7 @@ public abstract class TestCalculationDataUtils {
 
     public static Recipe createRecipe() {
         return new Recipe(null, 1L, createComponents(List.of(ONE, TWO, THREE)),
-                "Тестовый медовик", BigDecimal.valueOf(254.30), 10,
+                TEST_RECIPE_NAME, BigDecimal.valueOf(254.30), 10,
                 LocalDateTime.now(), true, PrivacyType.ALL);
     }
 
@@ -121,7 +123,7 @@ public abstract class TestCalculationDataUtils {
 
     public static RecipeDTO createRecipeDTO() {
         RecipeDTO expectedRecipeDTO = new RecipeDTO();
-        expectedRecipeDTO.setName("Медовик");
+        expectedRecipeDTO.setName(TEST_RECIPE_NAME);
         expectedRecipeDTO.setSquare(BigDecimal.valueOf(254.30));
         expectedRecipeDTO.setCost(BigDecimal.valueOf(192.5));
         List<ComponentDTO> componentDTOS = createComponents(List.of(ONE, TWO, THREE)).stream()
