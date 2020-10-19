@@ -38,7 +38,7 @@ class CalculationServiceTest {
     void checkNewRecipeDtoSum_0_00() {
         RecipeDTO actualDTO = squareService.calculate(TestCalculationDataUtils.createRecipe(), BigDecimal.valueOf(0));
         RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
-        expectedDTO.setCost(BigDecimal.valueOf(0.0));
+        expectedDTO.setCost(BigDecimal.valueOf(0));
         assertThat(actualDTO).isEqualToIgnoringGivenFields(expectedDTO, "componentDTOs");
     }
 

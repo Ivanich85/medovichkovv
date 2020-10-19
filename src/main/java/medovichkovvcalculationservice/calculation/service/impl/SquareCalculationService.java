@@ -9,6 +9,7 @@ import medovichkovvcalculationservice.error.CalculationError;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static medovichkovvcalculationservice.calculation.CalculationUtils.getListSum;
@@ -30,19 +31,20 @@ public class SquareCalculationService implements CalculationService {
             throw CalculationError.create("Base recipe can`t be null");
         }
         RecipeDTO recipeDTO = createFromRecipe(baseRecipe);
-        recipeDTO.getComponentDTOs().stream()
+        List<ComponentDTO> componentDTOs = recipeDTO.getComponentDTOs();
+        componentDTOs.stream()
                 .flatMap(componentDTO -> componentDTO.getRecipeIngredientDTOS().stream())
                 .forEach(ingredientDTO -> {
                     ingredientDTO.setCost(multiply(ingredientDTO.getCost(), recalculationCoef));
                     ingredientDTO.setWeight(multiply(ingredientDTO.getWeight(), recalculationCoef));
                 });
-        recipeDTO.getComponentDTOs().stream()
+        componentDTOs.stream()
                 .forEach(c -> c.setCost(getListSum(
                         c.getRecipeIngredientDTOS().stream()
                                 .map(RecipeIngredientDTO::getCost)
                                 .collect(Collectors.toList()))));
         recipeDTO.setCost(getListSum(
-                recipeDTO.getComponentDTOs().stream()
+                componentDTOs.stream()
                         .map(ComponentDTO::getCost)
                         .collect(Collectors.toList())));
         return recipeDTO;

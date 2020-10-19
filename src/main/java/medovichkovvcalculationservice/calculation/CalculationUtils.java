@@ -13,7 +13,7 @@ import java.util.List;
 public abstract class CalculationUtils {
 
     public static BigDecimal multiply(BigDecimal first, BigDecimal second) {
-        if (first == null || second == null) {
+        if (first == null || first.equals(BigDecimal.ZERO) || second == null || second.equals(BigDecimal.ZERO)) {
             return BigDecimal.ZERO;
         }
         return first.multiply(second).round(new MathContext(3, RoundingMode.HALF_UP));
