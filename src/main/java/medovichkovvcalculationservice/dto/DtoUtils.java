@@ -46,7 +46,7 @@ public abstract class DtoUtils {
         componentDTO.setQuantity(component.getQuantity());
         componentDTO.setType(component.getType());
 
-        List<RecipeIngredient> ingredients = component.getIngredients();
+        List<RecipeIngredient> ingredients = component.getRecipeIngredients();
         componentDTO.setRecipeIngredientDTOS(ingredients.stream()
                 .map(DtoUtils::createFromRecipeIngredient)
                 .collect(toList()));

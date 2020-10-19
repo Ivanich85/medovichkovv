@@ -1,9 +1,9 @@
 package medovichkovvcalculationservice.service.impl;
 
 import medovichkovvcalculationservice.entity.Recipe;
-import medovichkovvcalculationservice.repository.ComponentRepository;
-import medovichkovvcalculationservice.repository.RecipeIngredientRepository;
 import medovichkovvcalculationservice.repository.RecipeRepository;
+import medovichkovvcalculationservice.service.ComponentService;
+import medovichkovvcalculationservice.service.RecipeIngredientService;
 import medovichkovvcalculationservice.service.RecipeService;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +15,15 @@ import java.util.List;
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository recipeRepository;
-    private final ComponentRepository componentRepository;
-    private final RecipeIngredientRepository recipeIngredientRepository;
+    private final ComponentService componentService;
+    private final RecipeIngredientService recipeIngredientService;
 
     public RecipeServiceImpl(RecipeRepository recipeRepository,
-                             ComponentRepository componentRepository,
-                             RecipeIngredientRepository recipeIngredientRepository) {
+                             ComponentService componentService,
+                             RecipeIngredientService recipeIngredientService) {
         this.recipeRepository = recipeRepository;
-        this.componentRepository = componentRepository;
-        this.recipeIngredientRepository = recipeIngredientRepository;
+        this.componentService = componentService;
+        this.recipeIngredientService = recipeIngredientService;
     }
 
     @Override
@@ -48,13 +48,19 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe save(Recipe recipe) {
-        return recipeRepository.save(recipe);
+        recipeRepository.save(recipe).getComponents().stream()
+                .filter(component -> component.getRecipe() == null)
+                .forEach(component ->  {
+                    component.setRecipe(recipe);
+                    componentService.save(component);
+                });
+        return recipe;
     }
 
     @Override
     public boolean delete(Long recipeId, Long userId) {
-        return recipeIngredientRepository.deleteAllForComponent(recipeId)
-                && componentRepository.deleteAllForRecipe(recipeId)
-                && recipeRepository.delete(recipeId, userId);
+        var compDelete = componentService.deleteAllForRecipe(recipeId);
+        var recipeDelete = recipeRepository.delete(recipeId, userId);
+        return compDelete && recipeDelete;
     }
 }

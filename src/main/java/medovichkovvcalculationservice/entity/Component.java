@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import medovichkovvcalculationservice.configuration.DataSourceConfig;
 import medovichkovvcalculationservice.enums.ComponentType;
 
-import javax.annotation.sql.DataSourceDefinition;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,7 +44,7 @@ public class Component implements Serializable {
     private Integer quantity;
 
     @OneToMany(mappedBy = "component", fetch = FetchType.EAGER)
-    private List<RecipeIngredient> ingredients = new ArrayList<>();
+    private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

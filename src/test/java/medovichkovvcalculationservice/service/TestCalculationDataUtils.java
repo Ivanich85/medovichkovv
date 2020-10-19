@@ -2,8 +2,8 @@ package medovichkovvcalculationservice.service;
 
 import medovichkovvcalculationservice.dto.ComponentDTO;
 import medovichkovvcalculationservice.dto.DtoUtils;
-import medovichkovvcalculationservice.dto.RecipeIngredientDTO;
 import medovichkovvcalculationservice.dto.RecipeDTO;
+import medovichkovvcalculationservice.dto.RecipeIngredientDTO;
 import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.entity.Recipe;
@@ -27,6 +27,7 @@ import static medovichkovvcalculationservice.service.TestCalculationDataUtils.En
 public abstract class TestCalculationDataUtils {
 
     private static final String TEST_RECIPE_NAME = "Тестовый медовик";
+    public static final Long USER_ID = 1L;
 
     public enum EntityNumber {
         ONE,
@@ -96,25 +97,38 @@ public abstract class TestCalculationDataUtils {
         }
     }
 
+    public static List<Ingredient> createAllIngredients() {
+        return createIngredients(List.of(ONE, TWO, THREE, FOUR, FIVE, SIX));
+    }
+
+    public static List<Ingredient> createIngredients(List<EntityNumber> numbers) {
+        if (CollectionUtils.isEmpty(numbers)) {
+            return new ArrayList<>();
+        }
+        return numbers.stream()
+                .map(TestCalculationDataUtils::createIngredient)
+                .collect(Collectors.toList());
+    }
+
     public static Ingredient createIngredient(EntityNumber entityNumber) {
         switch (entityNumber) {
             case ONE:
-                return new Ingredient(null,
+                return new Ingredient(null, USER_ID,
                         "Яйца", BigDecimal.valueOf(10), IngredientQtyType.PIECE, null, BigDecimal.valueOf(75));
             case TWO:
-                return new Ingredient(null,
-                        "Сахар", BigDecimal.valueOf(1000), IngredientQtyType.GRAM, null, BigDecimal.valueOf(35));
+                return new Ingredient(null, USER_ID,
+                        "Сахар",  BigDecimal.valueOf(1000), IngredientQtyType.GRAM, null, BigDecimal.valueOf(35));
             case THREE:
-                return new Ingredient(null,
+                return new Ingredient(null, USER_ID,
                         "Сметана", BigDecimal.valueOf(350), IngredientQtyType.GRAM, null, BigDecimal.valueOf(80));
             case FOUR:
-                return new Ingredient(null,
+                return new Ingredient(null, USER_ID,
                         "Сахарная пудра", BigDecimal.valueOf(1000), IngredientQtyType.GRAM, null, BigDecimal.valueOf(100));
             case FIVE:
-                return new Ingredient(null,
+                return new Ingredient(null, USER_ID,
                         "Молоко", BigDecimal.valueOf(1000), IngredientQtyType.GRAM, null, BigDecimal.valueOf(50));
             case SIX:
-                return new Ingredient(null,
+                return new Ingredient(null, USER_ID,
                         "Желтки", BigDecimal.valueOf(10), IngredientQtyType.PIECE, null, BigDecimal.valueOf(75));
             default:
                 return null;

@@ -9,15 +9,17 @@ DROP SEQUENCE IF EXISTS MC_RECIPE_SEQ;
 DROP SEQUENCE IF EXISTS MC_INGREDIENT_SEQ;
 
 CREATE TABLE MC_INGREDIENT (
-                               ID              BIGINT          NOT NULL PRIMARY KEY ,
-                               NAME            VARCHAR(127)    NOT NULL ,
-                               QUANTITY        NUMERIC(6,2)    NOT NULL ,
-                               QUANTITY_TYPE   VARCHAR(16)     NOT NULL ,
-                               COST            NUMERIC(10,2)   NOT NULL
+   ID              BIGINT          NOT NULL PRIMARY KEY ,
+   USER_ID         BIGINT          NOT NULL,
+   NAME            VARCHAR(127)    NOT NULL ,
+   QUANTITY        NUMERIC(6,2)    NOT NULL ,
+   QUANTITY_TYPE   VARCHAR(16)     NOT NULL ,
+   COST            NUMERIC(10,2)   NOT NULL
 );
 CREATE SEQUENCE MC_INGREDIENT_SEQ INCREMENT BY 1 MINVALUE 1000000;
 
 COMMENT ON COLUMN MC_INGREDIENT.ID IS 'Row id';
+COMMENT ON COLUMN MC_INGREDIENT.USER_ID IS 'User created the ingredient';
 COMMENT ON COLUMN MC_INGREDIENT.NAME IS 'Ingredient name';
 COMMENT ON COLUMN MC_INGREDIENT.QUANTITY IS 'Weight or quantity';
 COMMENT ON COLUMN MC_INGREDIENT.QUANTITY_TYPE IS 'Type of quantity (grams for weight, pieces for quantity)';

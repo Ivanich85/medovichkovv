@@ -2,8 +2,8 @@ package medovichkovvcalculationservice.service.impl;
 
 import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.repository.ComponentRepository;
-import medovichkovvcalculationservice.repository.RecipeIngredientRepository;
 import medovichkovvcalculationservice.service.ComponentService;
+import medovichkovvcalculationservice.service.RecipeIngredientService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +15,12 @@ import java.util.List;
 public class ComponentServiceImpl implements ComponentService {
 
     private final ComponentRepository componentRepository;
-    private final RecipeIngredientRepository recipeIngredientRepository;
+    private final RecipeIngredientService recipeIngredientService;
 
     public ComponentServiceImpl(ComponentRepository componentRepository,
-                                RecipeIngredientRepository recipeIngredientRepository) {
+                                RecipeIngredientService recipeIngredientService) {
         this.componentRepository = componentRepository;
-        this.recipeIngredientRepository = recipeIngredientRepository;
+        this.recipeIngredientService = recipeIngredientService;
     }
 
     @Override
@@ -35,18 +35,24 @@ public class ComponentServiceImpl implements ComponentService {
 
     @Override
     public Component save(Component component) {
-        return componentRepository.save(component);
+        componentRepository.save(component).getRecipeIngredients().stream()
+                .filter(recipeIngredient -> recipeIngredient.getComponent() == null)
+                .forEach(recipeIngredient -> {
+                    recipeIngredient.setComponent(component);
+                    recipeIngredientService.save(recipeIngredient);
+                });
+        return component;
     }
 
     @Override
     public boolean delete(Long componentId) {
-        return recipeIngredientRepository.deleteAllForComponent(componentId)
+        return recipeIngredientService.deleteAllForComponent(componentId)
                 && componentRepository.delete(componentId);
     }
 
     @Override
     public boolean deleteAllForRecipe(Long recipeId) {
-        return recipeIngredientRepository.deleteAllForRecipe(recipeId)
+        return recipeIngredientService.deleteAllForRecipe(recipeId)
                 && componentRepository.deleteAllForRecipe(recipeId);
     }
 }

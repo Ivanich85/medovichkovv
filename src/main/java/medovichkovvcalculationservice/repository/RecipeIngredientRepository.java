@@ -1,6 +1,5 @@
 package medovichkovvcalculationservice.repository;
 
-import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.entity.RecipeIngredient;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +48,7 @@ public class RecipeIngredientRepository extends AbstractRepository {
     public boolean delete(Long ingredientId) {
         return entityManager.createQuery(
                 "delete " +
-                        "from Ingredient i " +
+                        "from RecipeIngredient i " +
                         "where i.id = :ingredientId")
                 .setParameter("ingredientId", ingredientId)
                 .executeUpdate() != 0;
@@ -79,7 +78,7 @@ public class RecipeIngredientRepository extends AbstractRepository {
                 .collect(Collectors.toList());
         return entityManager.createQuery(
                 "delete " +
-                        "from Ingredient i " +
+                        "from RecipeIngredient i " +
                         "where i.id in :recipeIds")
                 .setParameter("recipeIds", recipeIds)
                 .executeUpdate() != 0;

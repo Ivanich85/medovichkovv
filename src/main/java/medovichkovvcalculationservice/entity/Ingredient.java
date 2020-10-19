@@ -30,6 +30,9 @@ public class Ingredient implements Serializable {
     @Column(name = "ID", nullable = false)
     private Long id;
 
+    @Column(name = "USER_ID")
+    private Long userId;
+
     @Column(name = "NAME", nullable = false)
     private String name;
 
