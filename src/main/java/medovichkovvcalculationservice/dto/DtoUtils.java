@@ -8,7 +8,6 @@ import medovichkovvcalculationservice.entity.RecipeIngredient;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 import static medovichkovvcalculationservice.calculation.CalculationUtils.getListSum;
@@ -29,7 +28,7 @@ public abstract class DtoUtils {
         recipeDTO.setSquare(recipe.getSquare());
         recipeDTO.setComponentDTOs(recipe.getComponents().stream()
                 .map(DtoUtils::createFromComponent)
-                .collect(Collectors.toList()));
+                .collect(toList()));
         var componentDTOs = recipeDTO.getComponentDTOs();
         recipeDTO.setCost(getListSum(componentDTOs.stream()
                 .map(ComponentDTO::getCost)
