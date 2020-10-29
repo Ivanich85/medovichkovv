@@ -14,6 +14,8 @@ import java.math.BigDecimal;
 @Setter
 @EqualsAndHashCode
 public abstract class AbstractDTO implements Serializable {
+
+    private Long id;
     private String name;
     private BigDecimal cost;
 }

@@ -1,7 +1,8 @@
 package medovichkovvcalculationservice.service;
 
 import medovichkovvcalculationservice.dto.RecipeDTO;
-import medovichkovvcalculationservice.error.CalculationError;
+import medovichkovvcalculationservice.exception.CalculationException;
+import medovichkovvcalculationservice.exception.DtoCreateException;
 import medovichkovvcalculationservice.repository.RecipeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,14 +29,14 @@ class DtoServiceTest {
 
     @Test
     void recalculateRecipeCakeAndSquareNull() {
-        Assertions.assertThrows(CalculationError.class,
+        Assertions.assertThrows(CalculationException.class,
                 () -> dtoService.recalculateRecipe(null, null, null, null),
                 "New recipe square and cakes can`t be null");
     }
 
     @Test
     void recalculateRecipeCakeAndSquareNotNull() {
-        Assertions.assertThrows(CalculationError.class,
+        Assertions.assertThrows(CalculationException.class,
                 () -> dtoService.recalculateRecipe(null, null, BigDecimal.ONE, 15),
                 "New recipe square and cakes not null. It`s ambiguity");
     }
@@ -48,7 +49,7 @@ class DtoServiceTest {
     }
 
     @Test
-    void recalculateRecipe_1_70_coef() {
+    void recalculateRecipe_1_70_coef() throws DtoCreateException {
         when(recipeRepository.getByIdAndUserWithComponents(anyLong(), anyLong())).thenReturn(TestCalculationDataUtils.createRecipe());
         RecipeDTO actualDTO = dtoService.recalculateRecipe(1L, 2L, BigDecimal.valueOf(432.31), null);
         RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();

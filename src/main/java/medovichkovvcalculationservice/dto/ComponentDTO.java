@@ -1,5 +1,6 @@
 package medovichkovvcalculationservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,5 +19,7 @@ public class ComponentDTO extends AbstractDTO {
 
     private ComponentType type;
     private Integer quantity;
+
+    @JsonProperty("ingredients")
     private List<RecipeIngredientDTO> recipeIngredientDTOS = new ArrayList<>();
 }

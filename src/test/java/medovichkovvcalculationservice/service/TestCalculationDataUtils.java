@@ -144,6 +144,7 @@ public abstract class TestCalculationDataUtils {
                 .map(DtoUtils::createFromComponent)
                 .collect(Collectors.toList());
         expectedRecipeDTO.setComponentDTOs(componentDTOS);
+        expectedRecipeDTO.setFavorite(true);
         return expectedRecipeDTO;
     }
 

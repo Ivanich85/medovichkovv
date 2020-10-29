@@ -5,6 +5,7 @@ import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.entity.RecipeIngredient;
+import medovichkovvcalculationservice.exception.DtoCreateException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,13 +20,20 @@ import static medovichkovvcalculationservice.calculation.CalculationUtils.getLis
  */
 public abstract class DtoUtils {
 
-    public static RecipeDTO createFromRecipe(Recipe recipe) {
+    public static RecipeDTO createFromRecipe(Recipe recipe) throws DtoCreateException {
         RecipeDTO recipeDTO = new RecipeDTO();
         if (recipe == null) {
-            throw new IllegalStateException("Recipe can not be null");
+            throw new DtoCreateException("Recipe can`t be null");
         }
+        recipeDTO.setId(recipe.getId());
         recipeDTO.setName(recipe.getName());
         recipeDTO.setSquare(recipe.getSquare());
+        recipeDTO.setFavorite(recipe.isFavorite());
+        return recipeDTO;
+    }
+
+    public static RecipeDTO createFromRecipeWithSumAndComponents(Recipe recipe) throws DtoCreateException {
+        RecipeDTO recipeDTO = createFromRecipe(recipe);
         recipeDTO.setComponentDTOs(recipe.getComponents().stream()
                 .map(DtoUtils::createFromComponent)
                 .collect(toList()));
@@ -41,6 +49,7 @@ public abstract class DtoUtils {
         if (component == null) {
             return componentDTO;
         }
+        componentDTO.setId(component.getId());
         componentDTO.setName(component.getName());
         componentDTO.setQuantity(component.getQuantity());
         componentDTO.setType(component.getType());
@@ -63,6 +72,7 @@ public abstract class DtoUtils {
         Ingredient ingredient = recipeIngredient.getIngredient();
         BigDecimal coef = CalculationUtils.divide(recipeIngredient.getQuantity(), ingredient.getWeight());
 
+        recipeIngredientDTO.setId(ingredient.getId());
         recipeIngredientDTO.setName(ingredient.getName());
         recipeIngredientDTO.setType(ingredient.getType());
         recipeIngredientDTO.setCost(calcWithCoef(ingredient.getCost(), coef));

@@ -1,8 +1,10 @@
 package medovichkovvcalculationservice.service;
 
 import medovichkovvcalculationservice.dto.RecipeDTO;
+import medovichkovvcalculationservice.exception.DtoCreateException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface DtoService {
 
@@ -14,13 +16,9 @@ public interface DtoService {
      *
      * @return recipe of cake with expected square
      */
-    RecipeDTO recalculateRecipe(Long baseRecipeId, Long userId, BigDecimal newSquare, Integer cakes);
+    RecipeDTO recalculateRecipe(Long baseRecipeId, Long userId, BigDecimal newSquare, Integer cakes) throws DtoCreateException;
 
-    /**
-     * @param recipeId recipe what we need
-     * @param userId recipe`s owner
-     *
-     * @return recipe main description details
-     */
-    RecipeDTO getRecipeDto(Long recipeId, Long userId);
+    List<RecipeDTO> getAllRecipesForUser(Long userId) throws DtoCreateException;
+
+    RecipeDTO getRecipeForUser(Long recipeId, Long userId) throws DtoCreateException;
 }

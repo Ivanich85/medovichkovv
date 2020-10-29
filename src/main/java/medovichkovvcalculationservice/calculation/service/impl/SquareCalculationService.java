@@ -5,7 +5,8 @@ import medovichkovvcalculationservice.dto.ComponentDTO;
 import medovichkovvcalculationservice.dto.RecipeDTO;
 import medovichkovvcalculationservice.dto.RecipeIngredientDTO;
 import medovichkovvcalculationservice.entity.Recipe;
-import medovichkovvcalculationservice.error.CalculationError;
+import medovichkovvcalculationservice.exception.CalculationException;
+import medovichkovvcalculationservice.exception.DtoCreateException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 import static medovichkovvcalculationservice.calculation.CalculationUtils.getListSum;
 import static medovichkovvcalculationservice.calculation.CalculationUtils.multiply;
-import static medovichkovvcalculationservice.dto.DtoUtils.createFromRecipe;
+import static medovichkovvcalculationservice.dto.DtoUtils.createFromRecipeWithSumAndComponents;
 
 /**
  * @author ivand on 30.09.2020
@@ -23,14 +24,14 @@ import static medovichkovvcalculationservice.dto.DtoUtils.createFromRecipe;
 public class SquareCalculationService implements CalculationService {
 
     @Override
-    public RecipeDTO calculate(Recipe baseRecipe, BigDecimal recalculationCoef) {
+    public RecipeDTO calculate(Recipe baseRecipe, BigDecimal recalculationCoef) throws DtoCreateException {
         if (recalculationCoef == null) {
-            throw CalculationError.create("Recalculation coefficient can`t be null");
+            throw new CalculationException("Recalculation coefficient can`t be null");
         }
         if (baseRecipe == null) {
-            throw CalculationError.create("Base recipe can`t be null");
+            throw new CalculationException("Base recipe can`t be null");
         }
-        RecipeDTO recipeDTO = createFromRecipe(baseRecipe);
+        RecipeDTO recipeDTO = createFromRecipeWithSumAndComponents(baseRecipe);
         List<ComponentDTO> componentDTOs = recipeDTO.getComponentDTOs();
         componentDTOs.stream()
                 .flatMap(componentDTO -> componentDTO.getRecipeIngredientDTOS().stream())

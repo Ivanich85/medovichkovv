@@ -13,14 +13,14 @@ import java.util.List;
 public abstract class CalculationUtils {
 
     public static BigDecimal multiply(BigDecimal first, BigDecimal second) {
-        if (first == null || first.equals(BigDecimal.ZERO) || second == null || second.equals(BigDecimal.ZERO)) {
+        if (first == null || first.compareTo(BigDecimal.ZERO) == 0 || second == null || second.compareTo(BigDecimal.ZERO) == 0) {
             return BigDecimal.ZERO;
         }
         return first.multiply(second).round(new MathContext(3, RoundingMode.HALF_UP));
     }
 
     public static BigDecimal divide(BigDecimal dividend, BigDecimal divisor) {
-        if (dividend == null || dividend.equals(BigDecimal.ZERO) || divisor == null || divisor.equals(BigDecimal.ZERO)) {
+        if (dividend == null || dividend.compareTo(BigDecimal.ZERO) == 0 || divisor == null || divisor.compareTo(BigDecimal.ZERO) == 0) {
             return BigDecimal.ZERO;
         }
         return dividend.divide(divisor, 3, RoundingMode.HALF_UP);

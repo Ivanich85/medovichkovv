@@ -1,7 +1,9 @@
 package medovichkovvcalculationservice.calculation.service;
 
+import lombok.SneakyThrows;
 import medovichkovvcalculationservice.dto.RecipeDTO;
-import medovichkovvcalculationservice.error.CalculationError;
+import medovichkovvcalculationservice.exception.CalculationException;
+import medovichkovvcalculationservice.exception.DtoCreateException;
 import medovichkovvcalculationservice.service.TestCalculationDataUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,20 +24,20 @@ class CalculationServiceTest {
 
     @Test
     void calculateNullRecipe() {
-        assertThrows(CalculationError.class,
+        assertThrows(CalculationException.class,
                 () -> squareService.calculate(TestCalculationDataUtils.createRecipe(), null),
                 "Recalculation coefficient can`t be null");
     }
 
     @Test
     void calculateNullRecalcCoef() {
-        assertThrows(CalculationError.class,
+        assertThrows(CalculationException.class,
                 () -> squareService.calculate(TestCalculationDataUtils.createRecipe(), null),
                 "Base recipe can`t be null");
     }
 
     @Test
-    void checkNewRecipeDtoSum_0_00() {
+    void checkNewRecipeDtoSum_0_00() throws DtoCreateException {
         RecipeDTO actualDTO = squareService.calculate(TestCalculationDataUtils.createRecipe(), BigDecimal.valueOf(0));
         RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
         expectedDTO.setCost(BigDecimal.valueOf(0));
@@ -43,7 +45,7 @@ class CalculationServiceTest {
     }
 
     @Test
-    void checkNewRecipeDtoSum_0_45() {
+    void checkNewRecipeDtoSum_0_45() throws DtoCreateException {
         RecipeDTO actualDTO = squareService.calculate(TestCalculationDataUtils.createRecipe(), BigDecimal.valueOf(0.45));
         RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
         expectedDTO.setCost(BigDecimal.valueOf(86.68));
@@ -51,7 +53,7 @@ class CalculationServiceTest {
     }
 
     @Test
-    void checkNewRecipeDtoSum_1_30() {
+    void checkNewRecipeDtoSum_1_30() throws DtoCreateException {
         RecipeDTO actualDTO = squareService.calculate(TestCalculationDataUtils.createRecipe(), BigDecimal.valueOf(1.3));
         RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
         expectedDTO.setCost(BigDecimal.valueOf(250.4));
@@ -59,7 +61,7 @@ class CalculationServiceTest {
     }
 
     @Test
-    void checkNewRecipeDtoSum_1_70() {
+    void checkNewRecipeDtoSum_1_70() throws DtoCreateException {
         RecipeDTO actualDTO = squareService.calculate(TestCalculationDataUtils.createRecipe(), BigDecimal.valueOf(1.7));
         RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
         expectedDTO.setCost(BigDecimal.valueOf(327.4));

@@ -3,6 +3,7 @@ package medovichkovvcalculationservice.dto;
 import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.entity.RecipeIngredient;
+import medovichkovvcalculationservice.exception.DtoCreateException;
 import medovichkovvcalculationservice.service.TestCalculationDataUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,17 +34,17 @@ class DtoUtilsTest {
     }
 
     @Test
-    void createFromRecipe() {
+    void createFromRecipe() throws DtoCreateException {
         Recipe expectedRecipe = TestCalculationDataUtils.createRecipe();
         RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
-        RecipeDTO actualDTO = DtoUtils.createFromRecipe(expectedRecipe);
+        RecipeDTO actualDTO = DtoUtils.createFromRecipeWithSumAndComponents(expectedRecipe);
         assertThat(actualDTO).isEqualTo(expectedDTO);
     }
 
     @Test
     void createFromRecipeNull() {
-        assertThrows(IllegalStateException.class,
-                () -> DtoUtils.createFromRecipe(null),
+        assertThrows(DtoCreateException.class,
+                () -> DtoUtils.createFromRecipeWithSumAndComponents(null),
                 "Recipe can not be null");
     }
 }
