@@ -13,10 +13,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.lenient;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class DtoServiceTest {
@@ -42,7 +40,7 @@ class DtoServiceTest {
     }
     @Test
     void recalculateRecipeNotFound() {
-        lenient().when(recipeRepository.getByIdAndUserWithComponents(any(), any())).thenReturn(null);
+        when(recipeRepository.getByIdAndUserWithComponents(anyLong(), anyLong())).thenReturn(null);
         Assertions.assertThrows(IllegalStateException.class,
                 () -> dtoService.recalculateRecipe(1L, 2L, BigDecimal.ONE, null),
                 "Recipe id 1 for user 2 not found");
