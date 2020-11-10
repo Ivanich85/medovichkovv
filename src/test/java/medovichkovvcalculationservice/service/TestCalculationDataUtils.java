@@ -145,6 +145,7 @@ public abstract class TestCalculationDataUtils {
                 .collect(Collectors.toList());
         expectedRecipeDTO.setComponentDTOs(componentDTOS);
         expectedRecipeDTO.setFavorite(true);
+        expectedRecipeDTO.setPrivacyType(PrivacyType.ALL.name());
         return expectedRecipeDTO;
     }
 

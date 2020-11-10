@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.IOException;
+import java.io.StringWriter;
 
 /**
  * @author ivand on 04.11.2020

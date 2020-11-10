@@ -24,4 +24,7 @@ public class RecipeDTO extends AbstractDTO {
 
     @JsonProperty("favorite")
     private boolean isFavorite;
+
+    @JsonProperty("privacy_type")
+    private String privacyType;
 }

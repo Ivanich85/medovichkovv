@@ -1,23 +1,20 @@
 $(document).ready(function() {
 
-    var recipesTableId = "#recipes_table";
-    var myRecipesId = "#my_recipes";
+    let recipesTableId = "#recipes_table";
+    let myRecipesId = "#my_recipes";
+    let recipesTable;
 
     getRecipes();
 
     function getRecipes() {
         $.ajax({
             method: "GET",
-            url: "/recipes",
+            url: "/all",
             dataType: "json",
             success: function(responseJson) {
                 showOrHideRecipes(responseJson);
             }
         })
-    }
-
-    function isEmptyJson(responseJson) {
-        return responseJson.length === 0;
     }
 
     function showOrHideRecipes(responseJson) {
@@ -31,22 +28,48 @@ $(document).ready(function() {
         }
     }
 
+    function isEmptyJson(responseJson) {
+        return responseJson.length === 0;
+    }
+
     function fillRecipes(responseJson) {
-        $(recipesTableId).DataTable({
+        recipesTable = $(recipesTableId).DataTable({
             data : responseJson,
+            createdRow: function(row, data) {
+                $(row).attr("id", data.id)
+            },
             columns: [
-                {
-                    data: "id"
-                },
                 {
                     data: "name"
                 },
                 {
                     data: "favorite"
+                },
+                {
+                    data: "privacy_type"
                 }
             ]
         })
     }
+
+    $(recipesTableId).on("click", "tbody tr", function () {
+        $("#recipe_id").modal({
+            fadeDuration: 150,
+            showClose: false,
+            clickClose: false,
+            escapeClose: false
+        });
+        let rowId = recipesTable.row(this).data().id;
+        $.ajax({
+            method: "GET",
+            url: "/recipe/" + rowId,
+            dataType: "json",
+            success: function(responseJson) {
+                console.log(responseJson);
+                $("#recipe_description").html(responseJson.name);
+            }
+        })
+    })
 
 });
 

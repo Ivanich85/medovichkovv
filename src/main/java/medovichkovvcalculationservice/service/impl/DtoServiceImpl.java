@@ -18,6 +18,7 @@ import java.util.List;
 
 import static java.math.BigDecimal.valueOf;
 import static medovichkovvcalculationservice.dto.DtoUtils.createFromRecipe;
+import static medovichkovvcalculationservice.dto.DtoUtils.createFromRecipeWithSumAndComponents;
 
 /**
  * Class for calculation new yummy
@@ -56,7 +57,7 @@ public class DtoServiceImpl implements DtoService {
 
     @Override
     public RecipeDTO getRecipeForUser(Long recipeId, Long userId) throws DtoCreateException {
-        return createFromRecipe(recipeService.getByIdAndUser(recipeId, userId));
+        return createFromRecipeWithSumAndComponents(recipeService.getByIdAndUser(recipeId, userId));
     }
 
     private ServiceType checkServiceType(BigDecimal newSquare, Integer cakes) {
