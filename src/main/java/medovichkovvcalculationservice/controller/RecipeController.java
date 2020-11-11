@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,6 @@ public class RecipeController {
     }
 
     @GetMapping(ALL_RECIPES_URL)
-    @ResponseBody
     public ResponseEntity<List<RecipeDTO>> getAllUserRecipes() {
         try {
             return ResponseEntity.ok(dtoService.getAllRecipesForUser(SecurityUtils.getCurrentUser()));
@@ -47,7 +45,6 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/{" + RECIPE_ID_URL + "}")
-    @ResponseBody
     public ResponseEntity<RecipeDTO> getRecipe(@PathVariable(RECIPE_ID_URL) Long recipeId) {
         try {
             return ResponseEntity.of(Optional.of(dtoService.getRecipeForUser(recipeId, SecurityUtils.getCurrentUser())));
