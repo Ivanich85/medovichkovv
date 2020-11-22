@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Bootstrap CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+          crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+    <title>Medovichkovv</title>
+</head>
+<body>
+
+<h2>Рецепт: <span th:text="${recipe.name}"></span></h2>
+
+<table name="components" class="table table-hover">
+    <thead>
+        <tr class="table-header">
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Cost</th>
+            <th>Type</th>
+            <th>Ingredients</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="componentDto : ${recipe.componentDTOs}">
+            <td th:text="${componentDto.name}"></td>
+            <td th:text="${componentDto.quantity}"></td>
+            <td th:text="${componentDto.cost}"></td>
+            <td th:text="${componentDto.type}"></td>
+            <td>
+                <table name="ingredients" class="table table-hover">
+                    <thead>
+                        <tr class="table-header">
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Cost</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="ingredient : ${componentDto.recipeIngredientDTOS}">
+                            <td th:text="${ingredient.name}"></td>
+                            <td th:text="${ingredient.weight}"></td>
+                            <td th:text="${ingredient.cost}"></td>
+                            <td th:text="${ingredient.type}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

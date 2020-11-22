@@ -4,70 +4,64 @@ import medovichkovvcalculationservice.dto.RecipeDTO;
 import medovichkovvcalculationservice.exception.DtoCreateException;
 import medovichkovvcalculationservice.service.DtoService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.nio.charset.StandardCharsets;
-import java.util.List;
+import org.springframework.ui.Model;
 
 import static medovichkovvcalculationservice.service.TestCalculationDataUtils.createRecipeDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
-class RecipeControllerTest extends AbstractControllerTest {
+@SpringBootTest
+class RecipeControllerTest {
 
-    private final static String ALL_URL = "/all";
-    private final static String RECIPE_URL = "/recipe/100";
+    private static final String ALL_RECIPES_NAME = "recipes";
+    private static final String RECIPE_NAME = "recipe";
+
+    @Autowired
+    private RecipeController recipeController;
 
     @MockBean
     private DtoService dtoService;
 
+    @MockBean
+    private Model model;
+
     @Test
     void getAllUserRecipes() throws Exception {
-        when(dtoService.getAllRecipesForUser(anyLong()))
-                .thenReturn(List.of(createRecipeDTO(), createRecipeDTO()));
-        MvcResult mvcResult = mockMvc
-                .perform(MockMvcRequestBuilders
-                    .get(ALL_URL)
-                    .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-        RecipeDTO[] dtoArr = fromJson(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), RecipeDTO[].class);
-        assertEquals(2, dtoArr.length);
+        String modelName = recipeController.getAllUserRecipes(model);
+        assertEquals("recipe/all", modelName);
+        verify(dtoService).getAllRecipesForUser(anyLong());
+        verify(model).addAttribute(eq(ALL_RECIPES_NAME), anyList());
     }
 
     @Test
     void getAllUserRecipesError() throws Exception {
         when(dtoService.getAllRecipesForUser(anyLong())).thenThrow(DtoCreateException.class);
-        mockMvc.perform(MockMvcRequestBuilders
-                .get(ALL_URL)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is5xxServerError());
+        String modelName = recipeController.getAllUserRecipes(model);
+        assertNull(modelName);
+        verify(dtoService).getAllRecipesForUser(anyLong());
+        verify(model, times(0)).addAttribute(eq(ALL_RECIPES_NAME), anyList());
     }
 
     @Test
     void getRecipe() throws Exception {
-        RecipeDTO expectedDto = createRecipeDTO();
-        when(dtoService.getRecipeForUser(anyLong(), anyLong())).thenReturn(expectedDto);
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
-                .get(RECIPE_URL)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-        RecipeDTO dtoArr = fromJson(mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8), RecipeDTO.class);
-        assertEquals(expectedDto, dtoArr);
+        when(dtoService.getRecipeForUser(anyLong(), anyLong())).thenReturn(createRecipeDTO());
+        String modelName = recipeController.getRecipe(1L, model);
+        assertEquals("recipe/recipe", modelName);
+        verify(dtoService).getRecipeForUser(anyLong(), anyLong());
+        verify(model).addAttribute(eq(RECIPE_NAME), any(RecipeDTO.class));
     }
 
     @Test
     void getRecipeError() throws Exception {
         when(dtoService.getRecipeForUser(anyLong(), anyLong())).thenThrow(DtoCreateException.class);
-        mockMvc.perform(MockMvcRequestBuilders
-                .get(RECIPE_URL)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is5xxServerError());
+        String modelName = recipeController.getRecipe(1L, model);
+        assertNull(modelName);
+        verify(dtoService).getRecipeForUser(anyLong(), anyLong());
+        verify(model, times(0)).addAttribute(eq(RECIPE_NAME), any(RecipeDTO.class));
     }
 }

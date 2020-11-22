@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Bootstrap CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+          integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
+          crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+            integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+            crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+    <title>Medovichkovv</title>
+</head>
+<body>
+<div class="panel-headng">
+    <h1>Добро пожаловать в Medovichkovv!</h1>
+    <h3>Самые вкусные тортики пекут здесь :)</h3>
+</div>
+<h3></h3>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Is favorite</th>
+        <th>Privacy type</th>
+        <th>View recipe</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="recipe : ${recipes}">
+        <td th:text="${recipe.name}"></td>
+        <td th:text="${recipe.favorite}"></td>
+        <td th:text="${recipe.privacyType}"></td>
+        <td><a href="#" th:href="@{'/recipe/' + ${recipe.id}}">View</a></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
