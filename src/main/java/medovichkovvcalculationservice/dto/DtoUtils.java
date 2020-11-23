@@ -6,6 +6,7 @@ import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.entity.RecipeIngredient;
 import medovichkovvcalculationservice.exception.DtoCreateException;
+import medovichkovvcalculationservice.exception.EntityCreateException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -79,6 +80,34 @@ public abstract class DtoUtils {
         recipeIngredientDTO.setCost(calcWithCoef(ingredient.getCost(), coef));
         recipeIngredientDTO.setWeight(calcWithCoef(ingredient.getWeight(), coef));
         return recipeIngredientDTO;
+    }
+
+    public static IngredientDTO createFromIngredient(Ingredient ingredient) throws DtoCreateException {
+        IngredientDTO ingredientDTO = new IngredientDTO();
+        if (ingredient == null) {
+            throw new DtoCreateException("Ingredient can`t be null");
+        }
+        ingredientDTO.setCost(ingredient.getCost());
+        ingredientDTO.setWeight(ingredient.getWeight());
+        ingredientDTO.setType(ingredient.getType());
+        ingredientDTO.setName(ingredient.getName());
+        ingredientDTO.setUserId(ingredient.getUserId());
+        ingredientDTO.setId(ingredient.getId());
+        return ingredientDTO;
+    }
+
+    public static Ingredient createToIngredient(IngredientDTO ingredientDTO) throws EntityCreateException {
+        if (ingredientDTO == null) {
+            throw new EntityCreateException("Ingredient DTO can`t be null");
+        }
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(ingredientDTO.getId());
+        ingredient.setCost(ingredientDTO.getCost());
+        ingredient.setWeight(ingredientDTO.getWeight());
+        ingredient.setType(ingredientDTO.getType());
+        ingredient.setName(ingredientDTO.getName());
+        ingredient.setUserId(ingredientDTO.getUserId());
+        return ingredient;
     }
 
     private static BigDecimal calcWithCoef(BigDecimal value, BigDecimal coef) {

@@ -1,5 +1,6 @@
 package medovichkovvcalculationservice.service;
 
+import medovichkovvcalculationservice.TestDataUtils;
 import medovichkovvcalculationservice.dto.RecipeDTO;
 import medovichkovvcalculationservice.exception.CalculationException;
 import medovichkovvcalculationservice.exception.DtoCreateException;
@@ -48,9 +49,9 @@ class DtoServiceTest {
 
     @Test
     void recalculateRecipe_1_70_coef() throws DtoCreateException {
-        when(recipeRepository.getByIdAndUserWithComponents(anyLong(), anyLong())).thenReturn(TestCalculationDataUtils.createRecipe());
+        when(recipeRepository.getByIdAndUserWithComponents(anyLong(), anyLong())).thenReturn(TestDataUtils.createRecipe());
         RecipeDTO actualDTO = dtoService.recalculateRecipe(1L, 2L, BigDecimal.valueOf(432.31), null);
-        RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
+        RecipeDTO expectedDTO = TestDataUtils.createRecipeDTO();
         expectedDTO.setCost(BigDecimal.valueOf(327.4));
         assertThat(actualDTO).isEqualToIgnoringGivenFields(expectedDTO, "componentDTOs");
     }

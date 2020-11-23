@@ -1,9 +1,6 @@
-package medovichkovvcalculationservice.service;
+package medovichkovvcalculationservice;
 
-import medovichkovvcalculationservice.dto.ComponentDTO;
-import medovichkovvcalculationservice.dto.DtoUtils;
-import medovichkovvcalculationservice.dto.RecipeDTO;
-import medovichkovvcalculationservice.dto.RecipeIngredientDTO;
+import medovichkovvcalculationservice.dto.*;
 import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.entity.Recipe;
@@ -19,12 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static medovichkovvcalculationservice.service.TestCalculationDataUtils.EntityNumber.*;
+import static medovichkovvcalculationservice.TestDataUtils.EntityNumber.*;
 
 /**
  * @author ivand on 13.10.2020
  */
-public abstract class TestCalculationDataUtils {
+public abstract class TestDataUtils {
 
     private static final String TEST_RECIPE_NAME = "Тестовый медовик";
     public static final Long USER_ID = 1L;
@@ -49,7 +46,7 @@ public abstract class TestCalculationDataUtils {
             return new ArrayList<>();
         }
         return numbers.stream()
-                .map(TestCalculationDataUtils::createComponent)
+                .map(TestDataUtils::createComponent)
                 .collect(Collectors.toList());
     }
 
@@ -74,7 +71,7 @@ public abstract class TestCalculationDataUtils {
             return new ArrayList<>();
         }
         return numbers.stream()
-                .map(TestCalculationDataUtils::createRecipeIngredient)
+                .map(TestDataUtils::createRecipeIngredient)
                 .collect(Collectors.toList());
     }
 
@@ -106,7 +103,7 @@ public abstract class TestCalculationDataUtils {
             return new ArrayList<>();
         }
         return numbers.stream()
-                .map(TestCalculationDataUtils::createIngredient)
+                .map(TestDataUtils::createIngredient)
                 .collect(Collectors.toList());
     }
 
@@ -158,12 +155,34 @@ public abstract class TestCalculationDataUtils {
         return expectedConponentDTO;
     }
 
-    public static RecipeIngredientDTO createIngredientDTO() {
+    public static RecipeIngredientDTO createRecipeIngredientDTO() {
         RecipeIngredientDTO expectedRecipeIngredientDTO = new RecipeIngredientDTO();
         expectedRecipeIngredientDTO.setName("Яйца");
         expectedRecipeIngredientDTO.setType(IngredientQtyType.PIECE);
         expectedRecipeIngredientDTO.setWeight(BigDecimal.valueOf(3).setScale(2));
         expectedRecipeIngredientDTO.setCost(BigDecimal.valueOf(22.5));
         return expectedRecipeIngredientDTO;
+    }
+
+    public static Ingredient createIngredient() {
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(10000L);
+        ingredient.setCost(BigDecimal.valueOf(123.4));
+        ingredient.setName("Мука");
+        ingredient.setType(IngredientQtyType.GRAM);
+        ingredient.setUserId(USER_ID);
+        ingredient.setWeight(BigDecimal.valueOf(200.0));
+        return ingredient;
+    }
+
+    public static IngredientDTO createIngredientDTO() {
+        IngredientDTO ingredientDTO = new IngredientDTO();
+        ingredientDTO.setId(10000L);
+        ingredientDTO.setCost(BigDecimal.valueOf(123.4));
+        ingredientDTO.setName("Мука");
+        ingredientDTO.setType(IngredientQtyType.GRAM);
+        ingredientDTO.setUserId(USER_ID);
+        ingredientDTO.setWeight(BigDecimal.valueOf(200.0));
+        return ingredientDTO;
     }
 }

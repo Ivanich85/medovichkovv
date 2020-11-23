@@ -1,12 +1,12 @@
 package medovichkovvcalculationservice.repository;
 
 import medovichkovvcalculationservice.MedovichkovvCalculationService;
+import medovichkovvcalculationservice.TestDataUtils;
 import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.entity.RecipeIngredient;
 import medovichkovvcalculationservice.service.IngredientService;
 import medovichkovvcalculationservice.service.RecipeService;
-import medovichkovvcalculationservice.service.TestCalculationDataUtils;
 import medovichkovvcalculationservice.testconfiguration.TestDataSourceConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,8 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static medovichkovvcalculationservice.service.TestCalculationDataUtils.USER_ID;
-import static medovichkovvcalculationservice.service.TestCalculationDataUtils.createAllIngredients;
+import static medovichkovvcalculationservice.TestDataUtils.USER_ID;
+import static medovichkovvcalculationservice.TestDataUtils.createAllIngredients;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = MedovichkovvCalculationService.class)
@@ -35,7 +35,7 @@ class RecipeRepositoryTest {
         List<Ingredient> ingredients = createAllIngredients();
         ingredients.forEach(ingredient -> ingredientService.save(ingredient));
         Long userId = USER_ID;
-        Recipe recipe = TestCalculationDataUtils.createRecipe();
+        Recipe recipe = TestDataUtils.createRecipe();
         List<Ingredient> ingredientsUsedInRecipe = recipe.getComponents().stream()
                 .flatMap(
                         c -> c.getRecipeIngredients().stream()

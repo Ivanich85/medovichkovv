@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.ui.Model;
 
-import static medovichkovvcalculationservice.service.TestCalculationDataUtils.createRecipeDTO;
+import static medovichkovvcalculationservice.TestDataUtils.createRecipeDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.*;

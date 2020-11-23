@@ -1,14 +1,18 @@
 package medovichkovvcalculationservice.dto;
 
+import medovichkovvcalculationservice.TestDataUtils;
 import medovichkovvcalculationservice.entity.Component;
+import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.entity.RecipeIngredient;
 import medovichkovvcalculationservice.exception.DtoCreateException;
-import medovichkovvcalculationservice.service.TestCalculationDataUtils;
+import medovichkovvcalculationservice.exception.EntityCreateException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static medovichkovvcalculationservice.service.TestCalculationDataUtils.EntityNumber.ONE;
+import static medovichkovvcalculationservice.TestDataUtils.EntityNumber.ONE;
+import static medovichkovvcalculationservice.TestDataUtils.createIngredient;
+import static medovichkovvcalculationservice.TestDataUtils.createIngredientDTO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -18,16 +22,16 @@ class DtoUtilsTest {
 
     @Test
     void createFromIngredient() {
-        RecipeIngredient expectedIngredient = TestCalculationDataUtils.createRecipeIngredient(ONE);
-        RecipeIngredientDTO expectedDTO = TestCalculationDataUtils.createIngredientDTO();
+        RecipeIngredient expectedIngredient = TestDataUtils.createRecipeIngredient(ONE);
+        RecipeIngredientDTO expectedDTO = TestDataUtils.createRecipeIngredientDTO();
         RecipeIngredientDTO actualDTO = DtoUtils.createFromRecipeIngredient(expectedIngredient);
         assertEquals(expectedDTO, actualDTO);
     }
 
     @Test
     void createFromComponent() {
-        Component expectedComponent = TestCalculationDataUtils.createComponent(ONE);
-        ComponentDTO expectedDTO = TestCalculationDataUtils.createComponentDTO();
+        Component expectedComponent = TestDataUtils.createComponent(ONE);
+        ComponentDTO expectedDTO = TestDataUtils.createComponentDTO();
         ComponentDTO actualDTO = DtoUtils.createFromComponent(expectedComponent);
         assertEquals(2, actualDTO.getRecipeIngredientDTOS().size());
         assertThat(actualDTO).isEqualToIgnoringGivenFields(expectedDTO, "recipeIngredientDTOS");
@@ -35,8 +39,8 @@ class DtoUtilsTest {
 
     @Test
     void createFromRecipe() throws DtoCreateException {
-        Recipe expectedRecipe = TestCalculationDataUtils.createRecipe();
-        RecipeDTO expectedDTO = TestCalculationDataUtils.createRecipeDTO();
+        Recipe expectedRecipe = TestDataUtils.createRecipe();
+        RecipeDTO expectedDTO = TestDataUtils.createRecipeDTO();
         RecipeDTO actualDTO = DtoUtils.createFromRecipeWithSumAndComponents(expectedRecipe);
         assertThat(actualDTO).isEqualTo(expectedDTO);
     }
@@ -46,5 +50,33 @@ class DtoUtilsTest {
         assertThrows(DtoCreateException.class,
                 () -> DtoUtils.createFromRecipeWithSumAndComponents(null),
                 "Recipe can not be null");
+    }
+
+    @Test
+    void testCreateFromIngredientNull() {
+        assertThrows(DtoCreateException.class,
+                () -> DtoUtils.createFromIngredient(null),
+                "Ingredient can`t be null");
+    }
+
+    @Test
+    void testCreateFromIngredient() throws DtoCreateException {
+        Ingredient ingredient = createIngredient();
+        IngredientDTO expected = createIngredientDTO();
+        assertEquals(expected, DtoUtils.createFromIngredient(ingredient));
+    }
+
+    @Test
+    void createToIngredientNull() {
+        assertThrows(EntityCreateException.class,
+                () -> DtoUtils.createToIngredient(null),
+                "Ingredient DTO can`t be null");
+    }
+
+    @Test
+    void createToIngredient() throws EntityCreateException {
+        IngredientDTO ingredientDTO = createIngredientDTO();
+        Ingredient expected = createIngredient();
+        assertEquals(expected, DtoUtils.createToIngredient(ingredientDTO));
     }
 }
