@@ -1,8 +1,7 @@
 package medovichkovvcalculationservice.controller;
 
 import medovichkovvcalculationservice.dto.RecipeDTO;
-import medovichkovvcalculationservice.exception.DtoCreateException;
-import medovichkovvcalculationservice.service.DtoService;
+import medovichkovvcalculationservice.service.RecipeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,9 +10,10 @@ import org.springframework.ui.Model;
 
 import static medovichkovvcalculationservice.TestDataUtils.createRecipeDTO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class RecipeControllerTest {
@@ -25,43 +25,37 @@ class RecipeControllerTest {
     private RecipeController recipeController;
 
     @MockBean
-    private DtoService dtoService;
+    private RecipeService recipeService;
 
     @MockBean
     private Model model;
 
     @Test
-    void getAllUserRecipes() throws Exception {
+    void getAllUserRecipes() {
         String modelName = recipeController.getAllUserRecipes(model);
         assertEquals("recipe/all", modelName);
-        verify(dtoService).getAllRecipesForUser(anyLong());
+        verify(recipeService).getAllRecipesForUser(anyLong());
         verify(model).addAttribute(eq(ALL_RECIPES_NAME), anyList());
     }
 
     @Test
-    void getAllUserRecipesError() throws Exception {
-        when(dtoService.getAllRecipesForUser(anyLong())).thenThrow(DtoCreateException.class);
-        String modelName = recipeController.getAllUserRecipes(model);
-        assertNull(modelName);
-        verify(dtoService).getAllRecipesForUser(anyLong());
-        verify(model, times(0)).addAttribute(eq(ALL_RECIPES_NAME), anyList());
+    void getAllUserRecipesError() {
+        when(recipeService.getAllRecipesForUser(anyLong())).thenThrow(IllegalStateException.class);
+        assertThrows(IllegalStateException.class, () -> recipeController.getAllUserRecipes(model));
     }
 
     @Test
-    void getRecipe() throws Exception {
-        when(dtoService.getRecipeForUser(anyLong(), anyLong())).thenReturn(createRecipeDTO());
+    void getRecipe() {
+        when(recipeService.getRecipeForUser(anyLong(), anyLong())).thenReturn(createRecipeDTO());
         String modelName = recipeController.getRecipe(1L, model);
         assertEquals("recipe/recipe", modelName);
-        verify(dtoService).getRecipeForUser(anyLong(), anyLong());
+        verify(recipeService).getRecipeForUser(anyLong(), anyLong());
         verify(model).addAttribute(eq(RECIPE_NAME), any(RecipeDTO.class));
     }
 
     @Test
-    void getRecipeError() throws Exception {
-        when(dtoService.getRecipeForUser(anyLong(), anyLong())).thenThrow(DtoCreateException.class);
-        String modelName = recipeController.getRecipe(1L, model);
-        assertNull(modelName);
-        verify(dtoService).getRecipeForUser(anyLong(), anyLong());
-        verify(model, times(0)).addAttribute(eq(RECIPE_NAME), any(RecipeDTO.class));
+    void getRecipeError() {
+        when(recipeService.getRecipeForUser(anyLong(), anyLong())).thenThrow(IllegalStateException.class);
+        assertThrows(IllegalStateException.class, () -> recipeController.getRecipe(1L, model));
     }
 }

@@ -3,7 +3,6 @@ package medovichkovvcalculationservice.calculation.service;
 import medovichkovvcalculationservice.TestDataUtils;
 import medovichkovvcalculationservice.dto.RecipeDTO;
 import medovichkovvcalculationservice.exception.CalculationException;
-import medovichkovvcalculationservice.exception.DtoCreateException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,7 +35,7 @@ class CalculationServiceTest {
     }
 
     @Test
-    void checkNewRecipeDtoSum_0_00() throws DtoCreateException {
+    void checkNewRecipeDtoSum_0_00() {
         RecipeDTO actualDTO = squareService.calculate(TestDataUtils.createRecipe(), BigDecimal.valueOf(0));
         RecipeDTO expectedDTO = TestDataUtils.createRecipeDTO();
         expectedDTO.setCost(BigDecimal.valueOf(0));
@@ -44,7 +43,7 @@ class CalculationServiceTest {
     }
 
     @Test
-    void checkNewRecipeDtoSum_0_45() throws DtoCreateException {
+    void checkNewRecipeDtoSum_0_45() {
         RecipeDTO actualDTO = squareService.calculate(TestDataUtils.createRecipe(), BigDecimal.valueOf(0.45));
         RecipeDTO expectedDTO = TestDataUtils.createRecipeDTO();
         expectedDTO.setCost(BigDecimal.valueOf(86.68));
@@ -52,7 +51,7 @@ class CalculationServiceTest {
     }
 
     @Test
-    void checkNewRecipeDtoSum_1_30() throws DtoCreateException {
+    void checkNewRecipeDtoSum_1_30() {
         RecipeDTO actualDTO = squareService.calculate(TestDataUtils.createRecipe(), BigDecimal.valueOf(1.3));
         RecipeDTO expectedDTO = TestDataUtils.createRecipeDTO();
         expectedDTO.setCost(BigDecimal.valueOf(250.4));
@@ -60,7 +59,7 @@ class CalculationServiceTest {
     }
 
     @Test
-    void checkNewRecipeDtoSum_1_70() throws DtoCreateException {
+    void checkNewRecipeDtoSum_1_70() {
         RecipeDTO actualDTO = squareService.calculate(TestDataUtils.createRecipe(), BigDecimal.valueOf(1.7));
         RecipeDTO expectedDTO = TestDataUtils.createRecipeDTO();
         expectedDTO.setCost(BigDecimal.valueOf(327.4));

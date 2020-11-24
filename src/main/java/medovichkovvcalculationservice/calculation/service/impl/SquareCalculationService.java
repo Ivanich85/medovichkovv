@@ -6,7 +6,6 @@ import medovichkovvcalculationservice.dto.RecipeDTO;
 import medovichkovvcalculationservice.dto.RecipeIngredientDTO;
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.exception.CalculationException;
-import medovichkovvcalculationservice.exception.DtoCreateException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -24,7 +23,7 @@ import static medovichkovvcalculationservice.dto.DtoUtils.createFromRecipeWithSu
 public class SquareCalculationService implements CalculationService {
 
     @Override
-    public RecipeDTO calculate(Recipe baseRecipe, BigDecimal recalculationCoef) throws DtoCreateException {
+    public RecipeDTO calculate(Recipe baseRecipe, BigDecimal recalculationCoef) {
         if (recalculationCoef == null) {
             throw new CalculationException("Recalculation coefficient can`t be null");
         }

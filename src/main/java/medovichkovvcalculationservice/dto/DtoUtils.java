@@ -5,8 +5,6 @@ import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.entity.RecipeIngredient;
-import medovichkovvcalculationservice.exception.DtoCreateException;
-import medovichkovvcalculationservice.exception.EntityCreateException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,10 +19,10 @@ import static medovichkovvcalculationservice.calculation.CalculationUtils.getLis
  */
 public abstract class DtoUtils {
 
-    public static RecipeDTO createFromRecipe(Recipe recipe) throws DtoCreateException {
+    public static RecipeDTO createFromRecipe(Recipe recipe) {
         RecipeDTO recipeDTO = new RecipeDTO();
         if (recipe == null) {
-            throw new DtoCreateException("Recipe can`t be null");
+            throw new IllegalStateException("Recipe can`t be null");
         }
         recipeDTO.setId(recipe.getId());
         recipeDTO.setName(recipe.getName());
@@ -34,7 +32,7 @@ public abstract class DtoUtils {
         return recipeDTO;
     }
 
-    public static RecipeDTO createFromRecipeWithSumAndComponents(Recipe recipe) throws DtoCreateException {
+    public static RecipeDTO createFromRecipeWithSumAndComponents(Recipe recipe) {
         RecipeDTO recipeDTO = createFromRecipe(recipe);
         recipeDTO.setComponentDTOs(recipe.getComponents().stream()
                 .map(DtoUtils::createFromComponent)
@@ -82,10 +80,10 @@ public abstract class DtoUtils {
         return recipeIngredientDTO;
     }
 
-    public static IngredientDTO createFromIngredient(Ingredient ingredient) throws DtoCreateException {
+    public static IngredientDTO createFromIngredient(Ingredient ingredient) {
         IngredientDTO ingredientDTO = new IngredientDTO();
         if (ingredient == null) {
-            throw new DtoCreateException("Ingredient can`t be null");
+            throw new IllegalStateException("Ingredient can`t be null");
         }
         ingredientDTO.setCost(ingredient.getCost());
         ingredientDTO.setWeight(ingredient.getWeight());
@@ -96,9 +94,9 @@ public abstract class DtoUtils {
         return ingredientDTO;
     }
 
-    public static Ingredient createToIngredient(IngredientDTO ingredientDTO) throws EntityCreateException {
+    public static Ingredient createToIngredient(IngredientDTO ingredientDTO) {
         if (ingredientDTO == null) {
-            throw new EntityCreateException("Ingredient DTO can`t be null");
+            throw new IllegalStateException("Ingredient DTO can`t be null");
         }
         Ingredient ingredient = new Ingredient();
         ingredient.setId(ingredientDTO.getId());

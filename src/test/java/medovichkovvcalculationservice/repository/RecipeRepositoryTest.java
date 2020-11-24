@@ -2,6 +2,8 @@ package medovichkovvcalculationservice.repository;
 
 import medovichkovvcalculationservice.MedovichkovvCalculationService;
 import medovichkovvcalculationservice.TestDataUtils;
+import medovichkovvcalculationservice.dto.DtoUtils;
+import medovichkovvcalculationservice.dto.IngredientDTO;
 import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.entity.RecipeIngredient;
@@ -14,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static medovichkovvcalculationservice.TestDataUtils.USER_ID;
@@ -31,7 +34,7 @@ class RecipeRepositoryTest {
     private IngredientService ingredientService;
 
     @Test
-    void saveRecipe() {
+    void saveAndDeleteRecipe() {
         List<Ingredient> ingredients = createAllIngredients();
         ingredients.forEach(ingredient -> ingredientService.save(ingredient));
         Long userId = USER_ID;
@@ -62,5 +65,21 @@ class RecipeRepositoryTest {
                         .map(Ingredient::getId)
                         .collect(Collectors.toList())
         ));
+    }
+
+    @Test
+    void saveAndDeleteIngredientFromDTO() {
+        List<IngredientDTO> ingredientDtos = createAllIngredients().stream()
+                .map(DtoUtils::createFromIngredient)
+                .collect(Collectors.toList());
+        ingredientDtos = ingredientDtos.stream()
+                .map(i -> ingredientService.save(i))
+                .collect(Collectors.toList());
+        List<Long> ingredientIds = ingredientDtos.stream()
+                .map(IngredientDTO::getId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        assertEquals(ingredientDtos.size(), ingredientIds.size());
+        ingredientIds.forEach(id -> assertTrue(ingredientService.delete(id)));
     }
 }

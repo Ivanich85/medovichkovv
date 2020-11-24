@@ -11,7 +11,16 @@ import java.util.List;
  */
 @Repository
 @Transactional
-public class IngredientRepository extends AbstractRepository{
+public class IngredientRepository extends AbstractRepository  {
+
+    @Transactional(readOnly = true)
+    public List<Ingredient> getAllForUser(Long userId) {
+        return entityManager.createQuery(
+                "select i from Ingredient i " +
+                        "where i.userId = :userId ", Ingredient.class)
+                .setParameter("userId", userId)
+                .getResultList();
+    }
 
     public Ingredient save(Ingredient ingredient) {
         if (ingredient.getId() == null) {

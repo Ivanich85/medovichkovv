@@ -5,8 +5,6 @@ import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.entity.Ingredient;
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.entity.RecipeIngredient;
-import medovichkovvcalculationservice.exception.DtoCreateException;
-import medovichkovvcalculationservice.exception.EntityCreateException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -38,7 +36,7 @@ class DtoUtilsTest {
     }
 
     @Test
-    void createFromRecipe() throws DtoCreateException {
+    void createFromRecipe() {
         Recipe expectedRecipe = TestDataUtils.createRecipe();
         RecipeDTO expectedDTO = TestDataUtils.createRecipeDTO();
         RecipeDTO actualDTO = DtoUtils.createFromRecipeWithSumAndComponents(expectedRecipe);
@@ -47,20 +45,20 @@ class DtoUtilsTest {
 
     @Test
     void createFromRecipeNull() {
-        assertThrows(DtoCreateException.class,
+        assertThrows(IllegalStateException.class,
                 () -> DtoUtils.createFromRecipeWithSumAndComponents(null),
                 "Recipe can not be null");
     }
 
     @Test
     void testCreateFromIngredientNull() {
-        assertThrows(DtoCreateException.class,
+        assertThrows(IllegalStateException.class,
                 () -> DtoUtils.createFromIngredient(null),
                 "Ingredient can`t be null");
     }
 
     @Test
-    void testCreateFromIngredient() throws DtoCreateException {
+    void testCreateFromIngredient() {
         Ingredient ingredient = createIngredient();
         IngredientDTO expected = createIngredientDTO();
         assertEquals(expected, DtoUtils.createFromIngredient(ingredient));
@@ -68,13 +66,13 @@ class DtoUtilsTest {
 
     @Test
     void createToIngredientNull() {
-        assertThrows(EntityCreateException.class,
+        assertThrows(IllegalStateException.class,
                 () -> DtoUtils.createToIngredient(null),
                 "Ingredient DTO can`t be null");
     }
 
     @Test
-    void createToIngredient() throws EntityCreateException {
+    void createToIngredient() {
         IngredientDTO ingredientDTO = createIngredientDTO();
         Ingredient expected = createIngredient();
         assertEquals(expected, DtoUtils.createToIngredient(ingredientDTO));

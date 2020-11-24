@@ -3,7 +3,6 @@ package medovichkovvcalculationservice.service;
 import medovichkovvcalculationservice.TestDataUtils;
 import medovichkovvcalculationservice.dto.RecipeDTO;
 import medovichkovvcalculationservice.exception.CalculationException;
-import medovichkovvcalculationservice.exception.DtoCreateException;
 import medovichkovvcalculationservice.repository.RecipeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,13 +14,13 @@ import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class DtoServiceTest {
+class RecipeServiceTest {
 
     @Autowired
-    private DtoService dtoService;
+    private RecipeService recipeService;
 
     @MockBean
     private RecipeRepository recipeRepository;
@@ -29,28 +28,28 @@ class DtoServiceTest {
     @Test
     void recalculateRecipeCakeAndSquareNull() {
         Assertions.assertThrows(CalculationException.class,
-                () -> dtoService.recalculateRecipe(null, null, null, null),
+                () -> recipeService.recalculateRecipe(null, null, null, null),
                 "New recipe square and cakes can`t be null");
     }
 
     @Test
     void recalculateRecipeCakeAndSquareNotNull() {
         Assertions.assertThrows(CalculationException.class,
-                () -> dtoService.recalculateRecipe(null, null, BigDecimal.ONE, 15),
+                () -> recipeService.recalculateRecipe(null, null, BigDecimal.ONE, 15),
                 "New recipe square and cakes not null. It`s ambiguity");
     }
     @Test
     void recalculateRecipeNotFound() {
         when(recipeRepository.getByIdAndUserWithComponents(anyLong(), anyLong())).thenReturn(null);
         Assertions.assertThrows(IllegalStateException.class,
-                () -> dtoService.recalculateRecipe(1L, 2L, BigDecimal.ONE, null),
+                () -> recipeService.recalculateRecipe(1L, 2L, BigDecimal.ONE, null),
                 "Recipe id 1 for user 2 not found");
     }
 
     @Test
-    void recalculateRecipe_1_70_coef() throws DtoCreateException {
+    void recalculateRecipe_1_70_coef() {
         when(recipeRepository.getByIdAndUserWithComponents(anyLong(), anyLong())).thenReturn(TestDataUtils.createRecipe());
-        RecipeDTO actualDTO = dtoService.recalculateRecipe(1L, 2L, BigDecimal.valueOf(432.31), null);
+        RecipeDTO actualDTO = recipeService.recalculateRecipe(1L, 2L, BigDecimal.valueOf(432.31), null);
         RecipeDTO expectedDTO = TestDataUtils.createRecipeDTO();
         expectedDTO.setCost(BigDecimal.valueOf(327.4));
         assertThat(actualDTO).isEqualToIgnoringGivenFields(expectedDTO, "componentDTOs");
