@@ -142,7 +142,7 @@ public abstract class TestDataUtils {
                 .collect(Collectors.toList());
         expectedRecipeDTO.setComponentDTOs(componentDTOS);
         expectedRecipeDTO.setFavorite(true);
-        expectedRecipeDTO.setPrivacyType(PrivacyType.ALL.name());
+        expectedRecipeDTO.setPrivacyType(PrivacyType.ALL);
         return expectedRecipeDTO;
     }
 

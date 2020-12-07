@@ -17,9 +17,24 @@ public class IngredientRepository extends AbstractRepository  {
     public List<Ingredient> getAllForUser(Long userId) {
         return entityManager.createQuery(
                 "select i from Ingredient i " +
-                        "where i.userId = :userId ", Ingredient.class)
+                        "where i.userId = :userId " +
+                        "order by i.name ", Ingredient.class)
                 .setParameter("userId", userId)
                 .getResultList();
+    }
+
+    public Ingredient getByIdAndUser(Long ingredientId, Long userId) {
+        return entityManager.createQuery(
+                "select i from Ingredient i " +
+                        "where i.id = :ingredientId " +
+                        "and i.userId = :userId", Ingredient.class)
+                .setParameter("ingredientId", ingredientId)
+                .setParameter("userId", userId)
+                .setMaxResults(1)
+                .getResultList()
+                .stream()
+                .findFirst().orElse(null);
+
     }
 
     public Ingredient save(Ingredient ingredient) {

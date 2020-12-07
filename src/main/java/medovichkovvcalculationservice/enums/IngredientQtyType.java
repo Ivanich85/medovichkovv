@@ -1,5 +1,7 @@
 package medovichkovvcalculationservice.enums;
 
+import lombok.Getter;
+
 /**
  * Defines type of quantity for an ingredient
  *
@@ -7,8 +9,15 @@ package medovichkovvcalculationservice.enums;
  * PIECE - qty of pieces (ex. 1 cake)
  * PACK - common type for package (ex. 1 box, or 1 mount)
  **/
+@Getter
 public enum IngredientQtyType {
-    GRAM,
-    PIECE,
-    PACK
+    GRAM("Грамм"),
+    PIECE("Штука"),
+    PACK("Упаковка");
+
+    private final String description;
+
+    IngredientQtyType(String description) {
+        this.description = description;
+    }
 }

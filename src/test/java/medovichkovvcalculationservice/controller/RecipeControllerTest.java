@@ -1,25 +1,24 @@
 package medovichkovvcalculationservice.controller;
 
-import medovichkovvcalculationservice.dto.RecipeDTO;
 import medovichkovvcalculationservice.service.RecipeService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
 import static medovichkovvcalculationservice.TestDataUtils.createRecipeDTO;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 class RecipeControllerTest {
-
-    private static final String ALL_RECIPES_NAME = "recipes";
-    private static final String RECIPE_NAME = "recipe";
 
     @Autowired
     private RecipeController recipeController;
@@ -30,12 +29,19 @@ class RecipeControllerTest {
     @MockBean
     private Model model;
 
+    private MockMvc mockMvc;
+
+    @BeforeEach
+    void setUp() {
+        mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+    }
+
     @Test
-    void getAllUserRecipes() {
-        String modelName = recipeController.getAllUserRecipes(model);
-        assertEquals("recipe/all", modelName);
-        verify(recipeService).getAllRecipesForUser(anyLong());
-        verify(model).addAttribute(eq(ALL_RECIPES_NAME), anyList());
+    void getAllUserRecipes() throws Exception {
+        mockMvc.perform(get("/recipe"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/all"))
+                .andExpect(model().attributeExists("recipes"));
     }
 
     @Test
@@ -45,12 +51,12 @@ class RecipeControllerTest {
     }
 
     @Test
-    void getRecipe() {
+    void getRecipe() throws Exception {
         when(recipeService.getRecipeForUser(anyLong(), anyLong())).thenReturn(createRecipeDTO());
-        String modelName = recipeController.getRecipe(1L, model);
-        assertEquals("recipe/recipe", modelName);
-        verify(recipeService).getRecipeForUser(anyLong(), anyLong());
-        verify(model).addAttribute(eq(RECIPE_NAME), any(RecipeDTO.class));
+        mockMvc.perform(get("/recipe/100"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/recipe"))
+                .andExpect(model().attributeExists("recipe"));
     }
 
     @Test

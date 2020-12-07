@@ -25,6 +25,11 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    public IngredientDTO getByIdAndUser(Long ingredientId, Long userId) {
+        return DtoUtils.createFromIngredient(ingredientRepository.getByIdAndUser(ingredientId, userId));
+    }
+
+    @Override
     public List<IngredientDTO> getAllForUser(Long userId) {
         return ingredientRepository.getAllForUser(userId).stream()
                 .map(DtoUtils::createFromIngredient)
@@ -40,11 +45,6 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public Ingredient save(Ingredient ingredient) {
         return ingredientRepository.save(ingredient);
-    }
-
-    @Override
-    public Ingredient getById(Long aLong) {
-        throw new IllegalStateException("Get by id method doesn`t supported yet");
     }
 
     @Override

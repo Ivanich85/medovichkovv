@@ -9,8 +9,15 @@ import lombok.Getter;
  * FRIEND - owner`s friends only
  * NONE - nobody but the owner only
  **/
+@Getter
 public enum PrivacyType {
-    ALL,
-    FRIEND,
-    NONE
+    ALL("Все"),
+    FRIEND("Только друзья"),
+    NONE("Никто");
+
+    private String desc;
+
+    PrivacyType(String desc) {
+        this.desc = desc;
+    }
 }
