@@ -1,4 +1,4 @@
-package medovichkovvcalculationservice.repository;
+package medovichkovvcalculationservice.integrtest;
 
 import medovichkovvcalculationservice.MedovichkovvCalculationService;
 import medovichkovvcalculationservice.TestDataUtils;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = MedovichkovvCalculationService.class)
 @ContextConfiguration(classes = TestDataSourceConfig.class)
-class RecipeRepositoryTest {
+class CRUDRecipeTest {
 
     @Autowired
     private RecipeService recipeService;
