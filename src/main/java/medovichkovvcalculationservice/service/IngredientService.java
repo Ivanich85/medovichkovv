@@ -5,15 +5,18 @@ import medovichkovvcalculationservice.entity.Ingredient;
 
 import java.util.List;
 
-public interface IngredientService extends CrudService<Ingredient, Long> {
+public interface IngredientService {
+    Ingredient getByIdAndUser(Long ingredientId, Long userId);
 
-    IngredientDTO getByIdAndUser(Long ingredientId, Long userId);
+    IngredientDTO getDtoByIdAndUser(Long ingredientId, Long userId);
 
     List<IngredientDTO> getAllForUser(Long userId);
 
     IngredientDTO save(IngredientDTO ingredientDTO);
 
-    boolean delete(Long ingredientId);
+    Ingredient save(Ingredient ingredient);
 
-    boolean deleteIngredients(List<Long> ingredientIds);
+    void delete(Long ingredientId);
+
+    void deleteIngredients(List<Long> ingredientIds);
 }

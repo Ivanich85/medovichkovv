@@ -43,9 +43,6 @@ public class Ingredient implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private IngredientQtyType type;
 
-    @OneToMany(mappedBy = "ingredient")
-    private List<RecipeIngredient> recipeIngredient;
-
     @Column(name = "COST", nullable = false)
     private BigDecimal cost;
 

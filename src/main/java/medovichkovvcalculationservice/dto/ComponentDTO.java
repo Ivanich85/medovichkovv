@@ -19,6 +19,7 @@ public class ComponentDTO extends AbstractDTO {
 
     private ComponentType type;
     private Integer quantity;
+    private Long recipeDtoId;
 
     @JsonProperty("ingredients")
     private List<RecipeIngredientDTO> recipeIngredientDTOS = new ArrayList<>();

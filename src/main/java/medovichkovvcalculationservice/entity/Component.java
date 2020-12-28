@@ -36,7 +36,7 @@ public class Component implements Serializable {
     @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "type", nullable = false)
+    @Column(name = "TYPE", nullable = false)
     @Enumerated(value = EnumType.STRING)
     private ComponentType type;
 

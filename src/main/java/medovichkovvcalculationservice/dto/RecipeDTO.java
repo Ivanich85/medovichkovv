@@ -19,6 +19,10 @@ import java.util.List;
 public class RecipeDTO extends AbstractDTO {
 
     private BigDecimal square;
+    private Integer cakes;
+
+    @JsonProperty("user")
+    private Long userId;
 
     @JsonProperty("components")
     private List<ComponentDTO> componentDTOs = new ArrayList<>();

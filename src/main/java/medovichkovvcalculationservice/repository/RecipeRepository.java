@@ -21,7 +21,9 @@ public class RecipeRepository extends AbstractRepository {
         try {
             return entityManager.createQuery(
                     "select r from Recipe r " +
-                            "where r.id = :recipeId and r.userId = :userId", Recipe.class)
+                            "where r.id = :recipeId " +
+                            "and r.userId = :userId " +
+                            "order by r.name", Recipe.class)
                     .setParameter("recipeId", recipeId)
                     .setParameter("userId", userId)
                     .getSingleResult();
@@ -31,11 +33,13 @@ public class RecipeRepository extends AbstractRepository {
     }
 
     @Transactional(readOnly = true)
-    public Recipe getByIdAndUserWithComponents(Long recipeId, Long userId) {
+    public Recipe getByIdAndUserWithComponents(Long recipeId, Long userId) { ;
         try {
             return entityManager.createQuery(
-                    "select r from Recipe r join fetch r.components " +
-                            "where r.id = :recipeId and r.userId = :userId", Recipe.class)
+                    "select r from Recipe r " +
+                            "left join fetch r.components c " +
+                            "where r.id = :recipeId and r.userId = :userId " +
+                            "order by c.name ", Recipe.class)
                     .setParameter("recipeId", recipeId)
                     .setParameter("userId", userId)
                     .getSingleResult();
@@ -67,20 +71,17 @@ public class RecipeRepository extends AbstractRepository {
     }
 
     public Recipe save(Recipe recipe) {
-        if (recipe.getId() == null) {
-            entityManager.persist(recipe);
-            return recipe;
-        }
-        return entityManager.merge(recipe);
+        entityManager.persist(recipe);
+        return recipe;
     }
 
-    public boolean delete(Long recipeId, Long userId) {
-        return entityManager.createQuery(
+    public void delete(Long recipeId, Long userId) {
+        entityManager.createQuery(
                 "delete " +
                         "from Recipe r " +
                         "where r.id = :recipeId and r.userId = :userId")
                 .setParameter("recipeId", recipeId)
                 .setParameter("userId", userId)
-                .executeUpdate() != 0;
+                .executeUpdate();
     }
 }

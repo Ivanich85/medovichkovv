@@ -25,7 +25,12 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public IngredientDTO getByIdAndUser(Long ingredientId, Long userId) {
+    public Ingredient getByIdAndUser(Long ingredientId, Long userId) {
+        return ingredientRepository.getByIdAndUser(ingredientId, userId);
+    }
+
+    @Override
+    public IngredientDTO getDtoByIdAndUser(Long ingredientId, Long userId) {
         return DtoUtils.createFromIngredient(ingredientRepository.getByIdAndUser(ingredientId, userId));
     }
 
@@ -48,12 +53,12 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public boolean delete(Long ingredientId) {
-        return ingredientRepository.delete(ingredientId);
+    public void delete(Long ingredientId) {
+        ingredientRepository.delete(ingredientId);
     }
 
     @Override
-    public boolean deleteIngredients(List<Long> ingredientIds) {
-        return ingredientRepository.deleteIngredients(ingredientIds);
+    public void deleteIngredients(List<Long> ingredientIds) {
+        ingredientRepository.deleteIngredients(ingredientIds);
     }
 }

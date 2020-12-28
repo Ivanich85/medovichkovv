@@ -49,15 +49,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> getAll() {
-        return recipeRepository.getAll();
-    }
-
-    @Override
     public Recipe save(Recipe recipe) {
-        recipeRepository.save(recipe).getComponents().stream()
-                .filter(component -> component.getRecipe() == null)
-                .forEach(component ->  {
+        recipeRepository.save(recipe).getComponents().forEach(component ->  {
                     component.setRecipe(recipe);
                     componentService.save(component);
                 });
@@ -65,10 +58,9 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public boolean delete(Long recipeId, Long userId) {
-        var compDelete = componentService.deleteAllForRecipe(recipeId);
-        var recipeDelete = recipeRepository.delete(recipeId, userId);
-        return compDelete && recipeDelete;
+    public void delete(Long recipeId, Long userId) {
+        componentService.deleteAllForRecipe(recipeId);
+        recipeRepository.delete(recipeId, userId);
     }
 
     @Override
@@ -91,7 +83,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public RecipeDTO getRecipeForUser(Long recipeId, Long userId) {
-        return createFromRecipeWithSumAndComponents(getByIdAndUser(recipeId, userId));
+        return createFromRecipeWithSumAndComponents(getByIdAndUserWithComponents(recipeId, userId));
     }
 
     private ServiceType checkServiceType(BigDecimal newSquare, Integer cakes) {

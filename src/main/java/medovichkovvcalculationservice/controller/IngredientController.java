@@ -38,15 +38,15 @@ public class IngredientController {
 
     @GetMapping("/update/{id}")
     public String updateIngredient(@PathVariable("id") Long ingredientId, Model model) {
-        model.addAttribute("ingredientDTO", ingredientService.getByIdAndUser(ingredientId, SecurityUtils.getCurrentUser()));
+        model.addAttribute("ingredientDTO", ingredientService.getDtoByIdAndUser(ingredientId, SecurityUtils.getCurrentUser()));
         return "ingredient/ingredientform";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteIngredient(@PathVariable("id") Long ingredientId, Model model) {
-        IngredientDTO ingredientDTO = ingredientService.getByIdAndUser(ingredientId, SecurityUtils.getCurrentUser());
+    public String deleteIngredient(@PathVariable("id") Long ingredientId) {
+        IngredientDTO ingredientDTO = ingredientService.getDtoByIdAndUser(ingredientId, SecurityUtils.getCurrentUser());
         if (ingredientDTO != null) {
-            model.addAttribute("ingredientDTO", ingredientService.delete(ingredientId));
+            ingredientService.delete(ingredientId);
         }
         return REDIRECT_INGREDIENT;
     }

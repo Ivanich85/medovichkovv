@@ -6,7 +6,9 @@ import medovichkovvcalculationservice.entity.Recipe;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface RecipeService extends CrudService<Recipe, Long> {
+public interface RecipeService {
+
+    Recipe save(Recipe recipe);
 
     Recipe getByIdAndUser(Long recipeId, Long userId);
 
@@ -14,9 +16,7 @@ public interface RecipeService extends CrudService<Recipe, Long> {
 
     List<Recipe> getAllForCurrentUser(Long userId);
 
-    List<Recipe> getAll();
-
-    boolean delete(Long recipeId, Long userId);
+    void delete(Long recipeId, Long userId);
 
     /**
      * @param baseRecipeId recipe that we used as base for calculation

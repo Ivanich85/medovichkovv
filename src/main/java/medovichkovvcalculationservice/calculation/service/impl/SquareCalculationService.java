@@ -2,8 +2,8 @@ package medovichkovvcalculationservice.calculation.service.impl;
 
 import medovichkovvcalculationservice.calculation.service.CalculationService;
 import medovichkovvcalculationservice.dto.ComponentDTO;
+import medovichkovvcalculationservice.dto.IngredientDTO;
 import medovichkovvcalculationservice.dto.RecipeDTO;
-import medovichkovvcalculationservice.dto.RecipeIngredientDTO;
 import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.exception.CalculationException;
 import org.springframework.stereotype.Service;
@@ -34,14 +34,15 @@ public class SquareCalculationService implements CalculationService {
         List<ComponentDTO> componentDTOs = recipeDTO.getComponentDTOs();
         componentDTOs.stream()
                 .flatMap(componentDTO -> componentDTO.getRecipeIngredientDTOS().stream())
-                .forEach(ingredientDTO -> {
+                .forEach(recipeIngredientDTO -> {
+                    IngredientDTO ingredientDTO = recipeIngredientDTO.getIngredientDTO();
                     ingredientDTO.setCost(multiply(ingredientDTO.getCost(), recalculationCoef));
-                    ingredientDTO.setWeight(multiply(ingredientDTO.getWeight(), recalculationCoef));
+                    recipeIngredientDTO.setQuantity(multiply(recipeIngredientDTO.getQuantity(), recalculationCoef));
                 });
         componentDTOs.stream()
                 .forEach(c -> c.setCost(getListSum(
                         c.getRecipeIngredientDTOS().stream()
-                                .map(RecipeIngredientDTO::getCost)
+                                .map(ingrDto -> ingrDto.getIngredientDTO().getCost())
                                 .collect(Collectors.toList()))));
         recipeDTO.setCost(getListSum(
                 componentDTOs.stream()

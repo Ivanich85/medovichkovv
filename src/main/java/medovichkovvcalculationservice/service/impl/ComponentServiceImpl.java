@@ -1,5 +1,7 @@
 package medovichkovvcalculationservice.service.impl;
 
+import medovichkovvcalculationservice.dto.ComponentDTO;
+import medovichkovvcalculationservice.dto.DtoUtils;
 import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.repository.ComponentRepository;
 import medovichkovvcalculationservice.service.ComponentService;
@@ -29,15 +31,18 @@ public class ComponentServiceImpl implements ComponentService {
     }
 
     @Override
+    public ComponentDTO getDtoById(Long componentId) {
+        return DtoUtils.createFromComponent(componentRepository.getById(componentId));
+    }
+
+    @Override
     public List<Component> getAllForRecipe(Long recipeId) {
         return componentRepository.getAllForRecipe(recipeId);
     }
 
     @Override
     public Component save(Component component) {
-        componentRepository.save(component).getRecipeIngredients().stream()
-                .filter(recipeIngredient -> recipeIngredient.getComponent() == null)
-                .forEach(recipeIngredient -> {
+        componentRepository.save(component).getRecipeIngredients().forEach(recipeIngredient -> {
                     recipeIngredient.setComponent(component);
                     recipeIngredientService.save(recipeIngredient);
                 });
@@ -45,14 +50,14 @@ public class ComponentServiceImpl implements ComponentService {
     }
 
     @Override
-    public boolean delete(Long componentId) {
-        return recipeIngredientService.deleteAllForComponent(componentId)
-                && componentRepository.delete(componentId);
+    public void delete(Long componentId) {
+        recipeIngredientService.deleteAllForComponent(componentId);
+        componentRepository.delete(componentId);
     }
 
     @Override
-    public boolean deleteAllForRecipe(Long recipeId) {
-        return recipeIngredientService.deleteAllForRecipe(recipeId)
-                && componentRepository.deleteAllForRecipe(recipeId);
+    public void deleteAllForRecipe(Long recipeId) {
+        recipeIngredientService.deleteAllForRecipe(recipeId);
+        componentRepository.deleteAllForRecipe(recipeId);
     }
 }

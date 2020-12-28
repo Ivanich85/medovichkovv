@@ -41,20 +41,20 @@ public class RecipeIngredientServiceImpl implements RecipeIngredientService {
     }
 
     @Override
-    public boolean delete(Long ingredientId) {
-        return recipeIngredientRepository.delete(ingredientId);
+    public void delete(Long ingredientId) {
+        recipeIngredientRepository.delete(ingredientId);
     }
 
     @Override
-    public boolean deleteAllForComponent(Long componentId) {
-        return recipeIngredientRepository.deleteAllForComponent(componentId);
+    public void deleteAllForComponent(Long componentId) {
+        recipeIngredientRepository.deleteAllForComponent(componentId);
     }
 
     @Override
-    public boolean deleteAllForRecipe(Long recipeId) {
+    public void deleteAllForRecipe(Long recipeId) {
         List<Long> componentIds = componentRepository.getAllForRecipe(recipeId).stream()
                 .map(Component::getId)
                 .collect(Collectors.toList());
-        return recipeIngredientRepository.deleteAllForComponents(componentIds);
+        recipeIngredientRepository.deleteAllForComponents(componentIds);
     }
 }

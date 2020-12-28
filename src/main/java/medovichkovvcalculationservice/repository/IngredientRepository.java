@@ -45,24 +45,24 @@ public class IngredientRepository extends AbstractRepository  {
         return entityManager.merge(ingredient);
     }
 
-    public boolean delete(Long ingredientId) {
+    public void delete(Long ingredientId) {
         removeAllRelatedIngredients(List.of(ingredientId));
-        return entityManager.createQuery(
+        entityManager.createQuery(
                 "delete " +
                         "from Ingredient i " +
                         "where i.id = :ingredientId")
                 .setParameter("ingredientId", ingredientId)
-                .executeUpdate() != 0;
+                .executeUpdate();
     }
 
-    public boolean deleteIngredients(List<Long> ingredientIds) {
+    public void deleteIngredients(List<Long> ingredientIds) {
         removeAllRelatedIngredients(ingredientIds);
-        return entityManager.createQuery(
+        entityManager.createQuery(
                 "delete " +
                         "from Ingredient i " +
                         "where i.id in :ingredientIds")
                 .setParameter("ingredientIds", ingredientIds)
-                .executeUpdate() != 0;
+                .executeUpdate();
     }
 
     private void removeAllRelatedIngredients(List<Long> ingredientIds) {

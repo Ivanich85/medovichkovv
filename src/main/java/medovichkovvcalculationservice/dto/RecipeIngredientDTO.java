@@ -3,7 +3,6 @@ package medovichkovvcalculationservice.dto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import medovichkovvcalculationservice.enums.IngredientQtyType;
 
 import java.math.BigDecimal;
 
@@ -12,10 +11,11 @@ import java.math.BigDecimal;
  */
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
-public class RecipeIngredientDTO extends AbstractDTO {
+@EqualsAndHashCode
+public class RecipeIngredientDTO {
 
-    private IngredientQtyType type;
-    private BigDecimal weight;
-
+    private Long id;
+    private Long componentId;
+    private IngredientDTO ingredientDTO;
+    private BigDecimal quantity;
 }

@@ -1,8 +1,6 @@
 package medovichkovvcalculationservice.dto;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import medovichkovvcalculationservice.enums.IngredientQtyType;
 
 import java.math.BigDecimal;

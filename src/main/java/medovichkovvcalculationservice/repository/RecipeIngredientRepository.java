@@ -45,42 +45,42 @@ public class RecipeIngredientRepository extends AbstractRepository {
         return entityManager.merge(ingredient);
     }
 
-    public boolean delete(Long ingredientId) {
-        return entityManager.createQuery(
+    public void delete(Long ingredientId) {
+        entityManager.createQuery(
                 "delete " +
                         "from RecipeIngredient i " +
                         "where i.id = :ingredientId")
                 .setParameter("ingredientId", ingredientId)
-                .executeUpdate() != 0;
+                .executeUpdate();
     }
 
-    public boolean deleteAllForComponent(Long componentId) {
-        return entityManager.createQuery(
+    public void deleteAllForComponent(Long componentId) {
+        entityManager.createQuery(
                 "delete " +
                         "from RecipeIngredient i " +
                         "where i.component.id = :componentId")
                 .setParameter("componentId", componentId)
-                .executeUpdate() != 0;
+                .executeUpdate();
     }
 
-    public boolean deleteAllForComponents(List<Long> componentIds) {
-        return entityManager.createQuery(
+    public void deleteAllForComponents(List<Long> componentIds) {
+        entityManager.createQuery(
                 "delete " +
                         "from RecipeIngredient i " +
                         "where i.component.id in :componentIds")
                 .setParameter("componentIds", componentIds)
-                .executeUpdate() != 0;
+                .executeUpdate();
     }
 
-    public boolean deleteAllForRecipe(Long recipeId) {
+    public void deleteAllForRecipe(Long recipeId) {
         List<Long> recipeIds = getByRecipeId(recipeId).stream()
                 .map(RecipeIngredient::getId)
                 .collect(Collectors.toList());
-        return entityManager.createQuery(
+        entityManager.createQuery(
                 "delete " +
                         "from RecipeIngredient i " +
                         "where i.id in :recipeIds")
                 .setParameter("recipeIds", recipeIds)
-                .executeUpdate() != 0;
+                .executeUpdate();
     }
 }

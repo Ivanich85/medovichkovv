@@ -15,7 +15,7 @@ public enum ComponentType {
     @Getter
     private String desc;
 
-    private ComponentType(String desc) {
+    ComponentType(String desc) {
         this.desc = desc;
     }
 }

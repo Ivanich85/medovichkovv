@@ -18,24 +18,25 @@
             crossorigin="anonymous"></script>
 
     <meta charset="UTF-8">
-    <title>Ingredient form</title>
+    <title>Component form</title>
 </head>
 <div>
-    <input class="btn btn-primary btn-ingredient" type="button" value="К ингредиентам">
+    <input class="btn btn-primary btn-current-recipe" type="button" value="К рецепту...">
 </div>
 <body class="container-fluid" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form th:object="${ingredientDTO}" th:action="@{/ingredient/}" method="post">
+            <form th:object="${componentDTO}" th:action="@{/component/}" method="post">
                 <input type="hidden" th:field="*{id}"/>
+                <input id="recipe-id" type="hidden" th:field="*{recipeDtoId}"/>
                 <div class="pannel-group">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h1 class="panel-title">Ингредиент</h1>
+                            <h1 class="panel-title">Компонент</h1>
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-3 form-group">
+                                <div class="col-md-5 form-group">
                                     <label>Название</label>
                                     <input type="text" class="form-control" th:field="*{name}"/>
                                 </div>
@@ -44,17 +45,13 @@
                                 <div class="col-md-3 form-group">
                                     <label>Тип</label>
                                     <select class="form-control" th:field="*{type}">
-                                        <option th:each="type : ${T(medovichkovvcalculationservice.enums.IngredientQtyType).values()}"
-                                                th:value="${type}" th:text="${type.description}"></option>
+                                        <option th:each="type : ${T(medovichkovvcalculationservice.enums.ComponentType).values()}"
+                                                th:value="${type}" th:text="${type.desc}"></option>
                                     </select>
                                 </div>
                                 <div class="col-md-3 form-group">
-                                    <label>Вес</label>
-                                    <input type="number" step="0.01" class="form-control" th:field="*{weight}"/>
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <label>Стоимость</label>
-                                    <input type="number" step="0.01" class="form-control" th:field="*{cost}"/>
+                                    <label>Количество</label>
+                                    <input type="number" step="0.01" class="form-control" th:field="*{quantity}"/>
                                 </div>
                             </div>
                         </div>

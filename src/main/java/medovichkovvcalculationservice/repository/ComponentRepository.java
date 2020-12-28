@@ -12,9 +12,16 @@ import java.util.List;
 @Repository
 @Transactional
 public class ComponentRepository extends AbstractRepository {
+
     @Transactional(readOnly = true)
     public Component getById(Long componentId) {
-        return entityManager.find(Component.class, componentId);
+        return entityManager.createQuery(
+                "select c from Component c " +
+                        "where c.id = :componentId ", Component.class)
+                .setParameter("componentId", componentId)
+                .setMaxResults(1)
+                .getResultList()
+                .stream().findFirst().orElse(null);
     }
 
     @Transactional(readOnly = true)
@@ -36,21 +43,21 @@ public class ComponentRepository extends AbstractRepository {
         return entityManager.merge(component);
     }
 
-    public boolean delete(Long componentId) {
-        return entityManager.createQuery(
+    public void delete(Long componentId) {
+        entityManager.createQuery(
                 "delete " +
                         "from Component c " +
                         "where c.id = :componentId")
                 .setParameter("componentId", componentId)
-                .executeUpdate() != 0;
+                .executeUpdate();
     }
 
-    public boolean deleteAllForRecipe(Long recipeId) {
-        return entityManager.createQuery(
+    public void deleteAllForRecipe(Long recipeId) {
+        entityManager.createQuery(
                 "delete " +
                         "from Component c " +
                         "where c.recipe.id = :recipeId")
                 .setParameter("recipeId", recipeId)
-                .executeUpdate() != 0;
+                .executeUpdate();
     }
 }

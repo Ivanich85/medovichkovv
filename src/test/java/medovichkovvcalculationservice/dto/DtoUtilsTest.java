@@ -40,7 +40,7 @@ class DtoUtilsTest {
         Recipe expectedRecipe = TestDataUtils.createRecipe();
         RecipeDTO expectedDTO = TestDataUtils.createRecipeDTO();
         RecipeDTO actualDTO = DtoUtils.createFromRecipeWithSumAndComponents(expectedRecipe);
-        assertThat(actualDTO).isEqualTo(expectedDTO);
+        assertEquals(expectedDTO, actualDTO);
     }
 
     @Test

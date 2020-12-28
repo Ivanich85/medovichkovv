@@ -16,7 +16,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 @SpringBootTest
 class IngredientControllerTest {
 
@@ -51,7 +50,7 @@ class IngredientControllerTest {
 
     @Test
     void updateIngredient() throws Exception {
-        when(ingredientService.getByIdAndUser(any(), any())).thenReturn(new IngredientDTO());
+        when(ingredientService.getDtoByIdAndUser(any(), any())).thenReturn(new IngredientDTO());
         mockMvc.perform(get("/ingredient/update/100"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("ingredientDTO"))
@@ -60,10 +59,9 @@ class IngredientControllerTest {
 
     @Test
     void deleteIngredient() throws Exception {
-        when(ingredientService.getByIdAndUser(any(), any())).thenReturn(new IngredientDTO());
+        when(ingredientService.getDtoByIdAndUser(any(), any())).thenReturn(new IngredientDTO());
         mockMvc.perform(get("/ingredient/delete/100"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(model().attributeExists("ingredientDTO"))
                 .andExpect(view().name("redirect:/ingredient"));
     }
 

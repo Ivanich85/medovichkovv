@@ -56,14 +56,13 @@ class RecipeRepositoryTest {
         Long recipeId = recipe.getId();
 
         assertNotNull(recipeId);
-        assertTrue(recipeService.delete(recipeId, userId));
+        recipeService.delete(recipeId, userId);
         assertNull(recipeService.getByIdAndUser(recipeId, userId));
 
-        // Remove test data
-        assertTrue(ingredientService.deleteIngredients(
+        ingredientService.deleteIngredients(
                 ingredientsUsedInRecipe.stream()
                         .map(Ingredient::getId)
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toList()
         ));
     }
 
@@ -80,6 +79,6 @@ class RecipeRepositoryTest {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
         assertEquals(ingredientDtos.size(), ingredientIds.size());
-        ingredientIds.forEach(id -> assertTrue(ingredientService.delete(id)));
+        ingredientIds.forEach(id -> ingredientService.delete(id));
     }
 }

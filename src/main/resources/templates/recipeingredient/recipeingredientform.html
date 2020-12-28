@@ -18,16 +18,18 @@
             crossorigin="anonymous"></script>
 
     <meta charset="UTF-8">
-    <title>Ingredient form</title>
+    <title>Recipe ingredient form</title>
 </head>
 <div>
-    <input class="btn btn-primary btn-ingredient" type="button" value="К ингредиентам">
+    <input class="btn btn-primary btn-current-recipe" type="button" value="К рецепту...">
 </div>
 <body class="container-fluid" style="margin-top: 20px">
+<input id="recipe-id" type="hidden" th:value="${recipeId}"/>
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form th:object="${ingredientDTO}" th:action="@{/ingredient/}" method="post">
+            <form th:object="${recipeIngredientDTO}" th:action="@{/recipe-ingr/}" method="post">
                 <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{componentId}"/>
                 <div class="pannel-group">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -35,26 +37,17 @@
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-md-3 form-group">
-                                    <label>Название</label>
-                                    <input type="text" class="form-control" th:field="*{name}"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3 form-group">
-                                    <label>Тип</label>
-                                    <select class="form-control" th:field="*{type}">
-                                        <option th:each="type : ${T(medovichkovvcalculationservice.enums.IngredientQtyType).values()}"
-                                                th:value="${type}" th:text="${type.description}"></option>
+                                <div class="col-md-6 form-group">
+                                    <label>Ингредиент / Единица измерения</label>
+                                    <select class="form-control" th:field="*{ingredientDTO.id}">
+                                        <option th:each="ingredient : ${ingredients}"
+                                                th:value="${ingredient.id}" th:text="${ingredient.name} + ' / ' + ${ingredient.type.description}">
+                                        </option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 form-group">
-                                    <label>Вес</label>
-                                    <input type="number" step="0.01" class="form-control" th:field="*{weight}"/>
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <label>Стоимость</label>
-                                    <input type="number" step="0.01" class="form-control" th:field="*{cost}"/>
+                                <div class="col-md-4 form-group">
+                                    <label>Количество</label>
+                                    <input type="number" step="0.01" class="form-control" th:field="*{quantity}"/>
                                 </div>
                             </div>
                         </div>
