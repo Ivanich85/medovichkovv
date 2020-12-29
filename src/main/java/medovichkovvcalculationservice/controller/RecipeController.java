@@ -77,7 +77,6 @@ public class RecipeController {
         currentRecipe.setUserId(userId != null ? userId : getCurrentUser());
         currentRecipe.setName(recipeDTO.getName());
         currentRecipe.setFavorite(recipeDTO.isFavorite());
-        currentRecipe.setPrivacyType(recipeDTO.getPrivacyType());
         currentRecipe.setCakes(recipeDTO.getCakes());
         currentRecipe.setSquare(recipeDTO.getSquare());
         return currentRecipe;

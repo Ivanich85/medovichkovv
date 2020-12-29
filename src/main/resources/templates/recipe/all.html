@@ -41,7 +41,6 @@
             <th>Количество коржей</th>
             <th>Площадь, см2</th>
             <th>Любимый рецепт</th>
-            <th>Видимость</th>
             <th/>
             <th/>
         </tr>
@@ -52,7 +51,6 @@
             <td th:text="${recipe.cakes}"></td>
             <td th:text="${recipe.square}"></td>
             <td th:text="${recipe.favorite} ? 'да' : 'нет'"></td>
-            <td th:text="${recipe.privacyType.desc}"></td>
             <td><a href="#" th:href="@{'/recipe/' + ${recipe.id}}" title="Просмотр"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
             <td><a href="#" th:href="@{'/recipe/delete/' + ${recipe.id}}" title="Удалить"><i class="fa fa-times" aria-hidden="true"></i></a></td>
         </tr>

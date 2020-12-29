@@ -1,7 +1,6 @@
 package medovichkovvcalculationservice.repository;
 
 import medovichkovvcalculationservice.entity.Recipe;
-import medovichkovvcalculationservice.enums.PrivacyType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,9 +63,7 @@ public class RecipeRepository extends AbstractRepository {
         return entityManager.createQuery(
                 "select r " +
                         "from Recipe r " +
-                        "where r.privacyType = :privacyType " +
                         "order by r.name ", Recipe.class)
-                .setParameter("privacyType", PrivacyType.ALL)
                 .getResultList();
     }
 

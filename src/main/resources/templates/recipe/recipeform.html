@@ -41,13 +41,6 @@
                                     <input type="text" class="form-control" th:field="*{name}"/>
                                 </div>
                                 <div class="col-md-4 form-group">
-                                    <label>Видимость</label>
-                                    <select class="form-control" th:field="*{privacyType}">
-                                        <option th:each="type : ${T(medovichkovvcalculationservice.enums.PrivacyType).values()}"
-                                                th:value="${type}" th:text="${type.desc}"></option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 form-group">
                                     <label>Любимый рецепт</label>
                                     <div>
                                         <input type="checkbox" th:field="*{favorite}"/>

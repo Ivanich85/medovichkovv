@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import medovichkovvcalculationservice.enums.PrivacyType;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -29,7 +28,4 @@ public class RecipeDTO extends AbstractDTO {
 
     @JsonProperty("favorite")
     private boolean isFavorite;
-
-    @JsonProperty("privacy_type")
-    private PrivacyType privacyType;
 }

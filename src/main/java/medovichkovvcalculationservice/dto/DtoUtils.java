@@ -29,7 +29,6 @@ public abstract class DtoUtils {
         recipeDTO.setName(recipe.getName());
         recipeDTO.setSquare(recipe.getSquare());
         recipeDTO.setFavorite(recipe.isFavorite());
-        recipeDTO.setPrivacyType(recipe.getPrivacyType());
         recipeDTO.setCakes(recipe.getCakes());
         return recipeDTO;
     }

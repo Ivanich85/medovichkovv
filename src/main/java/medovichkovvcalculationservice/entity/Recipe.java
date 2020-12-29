@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import medovichkovvcalculationservice.enums.PrivacyType;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -56,10 +55,6 @@ public class Recipe implements Serializable {
     @Column(name = "FAVORITE")
     private boolean isFavorite;
 
-    @Column(name = "PRIVACY", nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private PrivacyType privacyType;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,12 +64,11 @@ public class Recipe implements Serializable {
                 userId.equals(recipe.userId) &&
                 name.equals(recipe.name) &&
                 Objects.equals(square, recipe.square) &&
-                Objects.equals(cakes, recipe.cakes) &&
-                privacyType == recipe.privacyType;
+                Objects.equals(cakes, recipe.cakes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name, square, cakes, isFavorite, privacyType);
+        return Objects.hash(userId, name, square, cakes, isFavorite);
     }
 }

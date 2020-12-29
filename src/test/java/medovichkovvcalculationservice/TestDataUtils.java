@@ -7,7 +7,6 @@ import medovichkovvcalculationservice.entity.Recipe;
 import medovichkovvcalculationservice.entity.RecipeIngredient;
 import medovichkovvcalculationservice.enums.ComponentType;
 import medovichkovvcalculationservice.enums.IngredientQtyType;
-import medovichkovvcalculationservice.enums.PrivacyType;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.math.BigDecimal;
@@ -38,7 +37,7 @@ public abstract class TestDataUtils {
     public static Recipe createRecipe() {
         return new Recipe(null, 1L, createComponents(List.of(ONE, TWO, THREE)),
                 TEST_RECIPE_NAME, BigDecimal.valueOf(254.30), 10,
-                LocalDateTime.now(), true, PrivacyType.ALL);
+                LocalDateTime.now(), true);
     }
 
     public static List<Component> createComponents(List<EntityNumber> numbers) {
@@ -143,7 +142,6 @@ public abstract class TestDataUtils {
                 .collect(Collectors.toList());
         expectedRecipeDTO.setComponentDTOs(componentDTOS);
         expectedRecipeDTO.setFavorite(true);
-        expectedRecipeDTO.setPrivacyType(PrivacyType.ALL);
         return expectedRecipeDTO;
     }
 
