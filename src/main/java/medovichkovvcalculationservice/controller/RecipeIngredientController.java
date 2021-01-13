@@ -1,5 +1,7 @@
 package medovichkovvcalculationservice.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import medovichkovvcalculationservice.dto.RecipeIngredientDTO;
 import medovichkovvcalculationservice.entity.Component;
 import medovichkovvcalculationservice.entity.Ingredient;
@@ -18,6 +20,7 @@ import static medovichkovvcalculationservice.dto.DtoUtils.createFromRecipeIngred
 /**
  * @author ivand on 16.12.2020
  */
+@Api(description = "Thymeleaf CRUD controller for recipe`s ingredients")
 @Controller
 @RequestMapping(value = "/recipe-ingr")
 public class RecipeIngredientController {
@@ -34,6 +37,7 @@ public class RecipeIngredientController {
         this.componentService = componentService;
     }
 
+    @ApiOperation(value = "Produces form for creation new ingredient")
     @GetMapping("new")
     public String create(@RequestParam("componentId") Long componentId,
                          @RequestParam("recipeId") Long recipeId, Model model) {
@@ -45,6 +49,7 @@ public class RecipeIngredientController {
         return "recipeingredient/recipeingredientform";
     }
 
+    @ApiOperation(value = "Produces form for current ingredient update")
     @GetMapping("update/{ingredient}")
     public String update(@PathVariable("ingredient") Long ingredientId, Model model) {
         RecipeIngredient recipeIngredient = recipeIngredientService.getById(ingredientId);
@@ -55,6 +60,7 @@ public class RecipeIngredientController {
         return "recipeingredient/recipeingredientform";
     }
 
+    @ApiOperation(value = "Save (or update) new (or current) ingredient")
     @PostMapping
     public String saveOrUpdate(@ModelAttribute("ingredient") RecipeIngredientDTO ingredientDTO) {
         RecipeIngredient ingredient = fromDto(ingredientDTO);
@@ -62,6 +68,7 @@ public class RecipeIngredientController {
         return redirectToRecipe(ingredient.getComponent().getRecipe().getId());
     }
 
+    @ApiOperation(value = "Delete current ingredient")
     @GetMapping("delete/{ingredient}")
     public String delete(@PathVariable("ingredient") Long ingredientId,
                          @RequestParam("recipeId") Long recipeId) {

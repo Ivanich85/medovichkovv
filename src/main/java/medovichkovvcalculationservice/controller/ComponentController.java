@@ -1,5 +1,7 @@
 package medovichkovvcalculationservice.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import medovichkovvcalculationservice.SecurityUtils;
 import medovichkovvcalculationservice.dto.ComponentDTO;
 import medovichkovvcalculationservice.entity.Component;
@@ -17,6 +19,7 @@ import static medovichkovvcalculationservice.controller.ControllerUtils.redirect
  * @author ivand on 08.12.2020
  */
 
+@Api(description = "Thymeleaf CRUD controller for recipe`s components")
 @Controller
 @RequestMapping("/component")
 public class ComponentController {
@@ -33,6 +36,7 @@ public class ComponentController {
         this.recipeIngredientService = recipeIngredientService;
     }
 
+    @ApiOperation(value = "Produces form for creation new component")
     @GetMapping("/new")
     public String createComponent(@RequestParam("recipeId") Long recipeId, Model model) {
         ComponentDTO componentDTO = new ComponentDTO();
@@ -41,12 +45,14 @@ public class ComponentController {
         return "component/componentform";
     }
 
+    @ApiOperation(value = "Produces form for current component update")
     @GetMapping("/update/{componentId}")
     public String updateComponent(@PathVariable("componentId") Long componentId, Model model) {
         model.addAttribute("componentDTO", componentService.getDtoById(componentId));
         return "component/componentform";
     }
 
+    @ApiOperation(value = "Delete current component")
     @GetMapping("/delete/{id}")
     public String deleteComponent(@PathVariable("id") Long componentId,
                                   @RequestParam("recipeId") Long recipeId) {
@@ -54,6 +60,7 @@ public class ComponentController {
         return redirectToRecipe(recipeId);
     }
 
+    @ApiOperation(value = "Save (or update) new (or current) component")
     @PostMapping
     public String saveComponent(@ModelAttribute ComponentDTO componentDTO) {
         componentService.save(fromDto(componentDTO));

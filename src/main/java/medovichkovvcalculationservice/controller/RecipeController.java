@@ -1,5 +1,7 @@
 package medovichkovvcalculationservice.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import medovichkovvcalculationservice.dto.DtoUtils;
 import medovichkovvcalculationservice.dto.RecipeDTO;
@@ -17,6 +19,7 @@ import static medovichkovvcalculationservice.controller.ControllerUtils.redirect
 /**
  * @author ivand on 21.10.2020
  */
+@Api(description = "Thymeleaf CRUD controller for recipes")
 @Controller
 @RequestMapping(value = "/recipe")
 @Slf4j
@@ -30,12 +33,14 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+    @ApiOperation(value = "Return all user`s recipes")
     @GetMapping
     public String getAllUserRecipes(Model model) {
         model.addAttribute("recipes", recipeService.getAllRecipesForUser(getCurrentUser()));
         return "recipe/all";
     }
 
+    @ApiOperation(value = "Open current recipe")
     @GetMapping("/{" + RECIPE_ID_URL + "}")
     public String getRecipe(@PathVariable(RECIPE_ID_URL) Long recipeId, Model model) {
         RecipeDTO recipeDTO = recipeService.getRecipeForUser(recipeId, getCurrentUser());
@@ -43,24 +48,28 @@ public class RecipeController {
         return "recipe/recipe";
     }
 
+    @ApiOperation(value = "Produces form for current recipe update")
     @GetMapping("/update/{id}")
     public String updateRecipe(@PathVariable("id") Long recipeId, Model model) {
         model.addAttribute("recipeDto", DtoUtils.createFromRecipe(recipeService.getByIdAndUser(recipeId, getCurrentUser())));
         return "recipe/recipeform";
     }
 
+    @ApiOperation(value = "Produces form for creation new recipe")
     @GetMapping("/new")
     public String createRecipe(Model model) {
         model.addAttribute("recipeDto", new RecipeDTO());
         return "recipe/recipeform";
     }
 
+    @ApiOperation(value = "Save (or update) new (or current) recipe")
     @PostMapping
     public String saveOrUpdate(@ModelAttribute RecipeDTO recipeDTO) {
         Recipe savedRecipe = recipeService.save(fromDto(recipeDTO));
         return redirectToRecipe(savedRecipe.getId());
     }
 
+    @ApiOperation(value = "Delete current recipe, recipe components and ingredients ")
     @GetMapping("/delete/{id}")
     public String deleteRecipe(@PathVariable("id") Long recipeId) {
         recipeService.delete(recipeId, getCurrentUser());
